@@ -3,6 +3,7 @@ terraform-provider-bless*
 .vscode
 terraform.tfstate*
 dist
+*-packr.go
 main
 bin
 .envrc

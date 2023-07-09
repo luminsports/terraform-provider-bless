@@ -34,6 +34,7 @@ func Provider() *schema.Provider {
 			"bless_ecdsa_ca": ECDSACA(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
+			"bless_lambda":         Lambda(),
 			"bless_kms_public_key": KMSPublicKey(),
 		},
 		ConfigureFunc: configureProvider,
