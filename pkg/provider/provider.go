@@ -1,7 +1,7 @@
 package provider
 
 import (
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/aws"
+	"github.com/luminsports/terraform-provider-bless/pkg/aws"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 

@@ -1,4 +1,4 @@
-module github.com/chanzuckerberg/terraform-provider-bless
+module github.com/luminsports/terraform-provider-bless
 
 go 1.15
 

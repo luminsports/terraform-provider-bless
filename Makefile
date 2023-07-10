@@ -4,26 +4,16 @@ export BASE_BINARY_NAME=terraform-provider-bless_v$(VERSION)
 SHA=$(shell git rev-parse --short HEAD)
 VERSION=$(shell cat VERSION)
 export DIRTY=$(shell if `git diff-index --quiet HEAD --`; then echo false; else echo true;  fi)
-LDFLAGS=-ldflags "-w -s -X github.com/chanzuckerberg/terraform-provider-bless/pkg/version.GitSha=${SHA} -X github.com/chanzuckerberg/terraform-provider-bless/pkg/version.Version=${VERSION} -X github.com/chanzuckerberg/terraform-provider-bless/pkg/version.Dirty=${DIRTY}"
+LDFLAGS=-ldflags "-w -s -X github.com/luminsports/terraform-provider-bless/pkg/version.GitSha=${SHA} -X github.com/luminsports/terraform-provider-bless/pkg/version.Version=${VERSION} -X github.com/luminsports/terraform-provider-bless/pkg/version.Dirty=${DIRTY}"
 
 
 setup: ## setup development dependencies
 	./.godownloader-packr.sh -d v1.24.1
 	curl -sfL https://raw.githubusercontent.com/chanzuckerberg/bff/main/download.sh | sh
 	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh
-	curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh
 .PHONY: setup
 
-lint: ## run the fast go linters on the diff from master
-	./bin/reviewdog -conf .reviewdog.yml  -diff "git diff master"
-.PHONY: lint
-
-lint-ci: ## run the linteres and annotate a PR (useful only for running in CI)
-	./bin/reviewdog -conf .reviewdog.yml  -reporter=github-pr-review
-.PHONY: lint-ci
-
 lint-all: ## run all the linters
-	# doesn't seem to be a way to get reviewdog to not filter by diff
 	./bin/golangci-lint run
 .PHONY: lint-all
 
@@ -66,14 +56,6 @@ release: check-release-prereqs ## run a release
 	git push
 	goreleaser release --debug --rm-dist
 .PHONY: release
-
-release-prerelease: check-release-prereqs build ## release to github as a 'pre-release'
-	version=`./$(BASE_BINARY_NAME) -version`; \
-	git tag v"$$version"; \
-	git push
-	git push --tags
-	goreleaser release -f .goreleaser.prerelease.yml --debug --rm-dist
-.PHONY: release-prerelease
 
 install-tf: build ## installs plugin where terraform can find it
 	mkdir -p $(HOME)/.terraform.d/plugins

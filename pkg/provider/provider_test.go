@@ -5,8 +5,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/kms"
 	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/aws"
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/provider"
+	"github.com/luminsports/terraform-provider-bless/pkg/aws"
+	"github.com/luminsports/terraform-provider-bless/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/stretchr/testify/assert"

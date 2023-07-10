@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/provider"
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/version"
+	"github.com/luminsports/terraform-provider-bless/pkg/provider"
+	"github.com/luminsports/terraform-provider-bless/pkg/version"
 
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"

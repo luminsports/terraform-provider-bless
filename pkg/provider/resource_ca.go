@@ -4,8 +4,8 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/aws"
-	"github.com/chanzuckerberg/terraform-provider-bless/pkg/util"
+	"github.com/luminsports/terraform-provider-bless/pkg/aws"
+	"github.com/luminsports/terraform-provider-bless/pkg/util"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/pkg/errors"
 )
