@@ -10,8 +10,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/kms"
-	tf "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
@@ -32,23 +32,23 @@ func TestKMSPublicKey(t *testing.T) {
 
 	kmsMock.On("GetPublicKey", mock.Anything).Return(output, nil)
 
-	tf.Test(t, tf.TestCase{
-		Providers: providers,
-		Steps: []tf.TestStep{
-			tf.TestStep{
+	resource.Test(t, resource.TestCase{
+		ProviderFactories: providers,
+		Steps: []resource.TestStep{
+			{
 				Config: `
-				provider "bless" {
-					region = "us-east-1"
-				}
+              provider "bless" {
+                region = "us-east-1"
+              }
 
-				data "bless_kms_public_key" "bless" {
-					kms_key_id = "testo"
-				}
+              data "bless_kms_public_key" "bless" {
+                kms_key_id = "testo"
+              }
 
-				output "public_key" {
-					value = "${data.bless_kms_public_key.bless.public_key}"
-				}
-			`,
+              output "public_key" {
+                value = "${data.bless_kms_public_key.bless.public_key}"
+              }
+            `,
 				Check: func(s *terraform.State) error {
 					publicSSHUntyped := s.RootModule().Outputs["public_key"].Value
 					publicSSH, ok := publicSSHUntyped.(string)

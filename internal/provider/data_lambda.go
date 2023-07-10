@@ -11,9 +11,9 @@ import (
 	"sort"
 	"text/template"
 
-	"github.com/luminsports/terraform-provider-bless/pkg/util"
 	"github.com/gobuffalo/packr"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/util"
 	"github.com/pkg/errors"
 )
 
@@ -116,7 +116,6 @@ func Lambda() *schema.Resource {
 
 }
 
-//
 type blessConfig struct {
 	// Name is the name of this service
 	Name string
@@ -279,6 +278,6 @@ func (l *resourceLambda) Read(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 	d.Set(SchemaOutputBase64Sha256, fileHash) //nolint
-	d.SetId(fileHash) //nolint
+	d.SetId(fileHash)                         //nolint
 	return err
 }

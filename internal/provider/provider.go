@@ -1,8 +1,8 @@
 package provider
 
 import (
-	"github.com/luminsports/terraform-provider-bless/pkg/aws"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/aws"
 )
 
 // Provider is a provider

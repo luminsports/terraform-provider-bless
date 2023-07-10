@@ -4,9 +4,9 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 
-	"github.com/luminsports/terraform-provider-bless/pkg/aws"
-	"github.com/luminsports/terraform-provider-bless/pkg/util"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/aws"
+	"github.com/luminsports/terraform-provider-bless/internal/util"
 	"github.com/pkg/errors"
 )
 
@@ -81,8 +81,8 @@ func (ca *resourceCA) Create(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.Set(schemaEncryptedPrivateKey, keyPair.B64EncryptedPrivateKey) // nolint
-	d.Set(schemaPublicKey, keyPair.PublicKey) // nolint
-	d.Set(schemaEncryptedPassword, encryptedPassword) // nolint
+	d.Set(schemaPublicKey, keyPair.PublicKey)                        // nolint
+	d.Set(schemaEncryptedPassword, encryptedPassword)                // nolint
 	d.SetId(util.HashForState(keyPair.PublicKey))
 	return nil
 }

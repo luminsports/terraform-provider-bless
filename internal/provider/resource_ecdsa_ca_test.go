@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/kms"
-	r "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -25,10 +25,10 @@ func TestCreateECDSA(t *testing.T) {
 	}
 	kmsMock.On("Encrypt", mock.Anything).Return(output, nil)
 
-	r.Test(t, r.TestCase{
-		Providers: providers,
-		Steps: []r.TestStep{
-			r.TestStep{
+	resource.Test(t, resource.TestCase{
+		ProviderFactories: providers,
+		Steps: []resource.TestStep{
+			resource.TestStep{
 				Config: `
 				provider "bless" {
 					region = "us-east-1"

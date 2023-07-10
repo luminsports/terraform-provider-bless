@@ -5,10 +5,9 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/kms"
 	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
-	"github.com/luminsports/terraform-provider-bless/pkg/aws"
-	"github.com/luminsports/terraform-provider-bless/pkg/provider"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/aws"
+	"github.com/luminsports/terraform-provider-bless/internal/provider"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -30,18 +29,21 @@ func (k *KMSMock) GetPublicKey(input *kms.GetPublicKeyInput) (*kms.GetPublicKeyO
 	return output, args.Error(1)
 }
 
-func getTestProviders() (map[string]terraform.ResourceProvider, *KMSMock) {
-	ca := provider.Provider()
+func getTestProviders() (map[string]func() (*schema.Provider, error), *KMSMock) {
 	kmsMock := &KMSMock{}
-	ca.ConfigureFunc = func(s *schema.ResourceData) (interface{}, error) {
-		client := &aws.Client{
-			KMS: aws.KMS{Svc: kmsMock},
-		}
-		return client, nil
+	providers := map[string]func() (*schema.Provider, error){
+		"bless": func() (*schema.Provider, error) {
+			ca := provider.Provider()
+			ca.ConfigureFunc = func(s *schema.ResourceData) (interface{}, error) {
+				client := &aws.Client{
+					KMS: aws.KMS{Svc: kmsMock},
+				}
+				return client, nil
+			}
+			return ca, nil
+		},
 	}
-	providers := map[string]terraform.ResourceProvider{
-		"bless": ca,
-	}
+
 	return providers, kmsMock
 }
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/service/kms"
-	"github.com/luminsports/terraform-provider-bless/pkg/aws"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/aws"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh"
 )
