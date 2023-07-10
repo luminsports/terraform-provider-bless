@@ -3,7 +3,7 @@
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from aspen_ssh.public_keys.ssh_public_key import SSHPublicKey, SSHPublicKeyType, SSHPublicKeyTypeName
+from bless.ssh.public_keys.ssh_public_key import SSHPublicKey, SSHPublicKeyType, SSHPublicKeyTypeName
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey, RSAPublicNumbers
 from typing import TYPE_CHECKING
 

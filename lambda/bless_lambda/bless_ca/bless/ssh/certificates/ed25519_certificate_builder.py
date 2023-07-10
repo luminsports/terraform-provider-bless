@@ -3,13 +3,13 @@
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from aspen_ssh.certificates.ssh_certificate_builder import (
+from bless.ssh.certificates.ssh_certificate_builder import (
     SSHCertificateBuilder,
     SSHCertifiedKeyType,
     SSHCertificateType,
 )
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_string
-from aspen_ssh.public_keys import ED25519PublicKey
+from bless.ssh.protocol.ssh_protocol import pack_ssh_string
+from bless.ssh.public_keys import ED25519PublicKey
 
 
 class ED25519CertificateBuilder(SSHCertificateBuilder):

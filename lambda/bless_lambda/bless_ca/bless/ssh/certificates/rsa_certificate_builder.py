@@ -4,16 +4,16 @@
     :license: Apache, see LICENSE for more details.
 """
 from typing import TYPE_CHECKING
-from aspen_ssh.certificates.ssh_certificate_builder import (
+from bless.ssh.certificates.ssh_certificate_builder import (
     SSHCertificateBuilder,
     SSHCertifiedKeyType,
     SSHCertificateType,
 )
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_mpint
+from bless.ssh.protocol.ssh_protocol import pack_ssh_mpint
 
 if TYPE_CHECKING:
-    from aspen_ssh.certificate_authorities import SSHCertificateAuthority
-    from aspen_ssh.public_keys import RsaPublicKey
+    from bless.ssh.certificate_authorities import SSHCertificateAuthority
+    from bless.ssh.public_keys import RsaPublicKey
 
 
 class RSACertificateBuilder(SSHCertificateBuilder):

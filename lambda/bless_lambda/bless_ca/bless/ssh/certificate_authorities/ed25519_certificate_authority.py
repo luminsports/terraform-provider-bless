@@ -3,12 +3,12 @@
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from aspen_ssh.certificate_authorities.ssh_certificate_authority import (
+from bless.ssh.certificate_authorities.ssh_certificate_authority import (
     SSHCertificateAuthority,
     SSHCertificateSignatureKeyType,
 )
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_string
-from aspen_ssh.public_keys.ssh_public_key import SSHPublicKeyType
+from bless.ssh.protocol.ssh_protocol import pack_ssh_string
+from bless.ssh.public_keys.ssh_public_key import SSHPublicKeyType
 from cryptography.hazmat.primitives.serialization import (
     Encoding,
     PublicFormat,

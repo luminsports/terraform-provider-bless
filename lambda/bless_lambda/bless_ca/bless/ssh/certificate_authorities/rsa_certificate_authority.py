@@ -5,15 +5,15 @@
 """
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.backends.openssl.rsa import RSAPrivateKey
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from typing import Literal, Union
 
-from aspen_ssh.certificate_authorities.ssh_certificate_authority import (
+from bless.ssh.certificate_authorities.ssh_certificate_authority import (
     SSHCertificateAuthority,
     SSHCertificateSignatureKeyType,
 )
-from aspen_ssh.public_keys import SSHPublicKeyType
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_mpint, pack_ssh_string
+from bless.ssh.public_keys import SSHPublicKeyType
+from bless.ssh.protocol.ssh_protocol import pack_ssh_mpint, pack_ssh_string
 
 
 class RSACertificateAuthority(SSHCertificateAuthority):

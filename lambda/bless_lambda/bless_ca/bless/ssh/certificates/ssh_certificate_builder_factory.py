@@ -4,14 +4,14 @@
     :license: Apache, see LICENSE for more details.
 """
 from typing import TYPE_CHECKING
-from aspen_ssh.certificates.rsa_certificate_builder import RSACertificateBuilder
-from aspen_ssh.certificates.ed25519_certificate_builder import ED25519CertificateBuilder
-from aspen_ssh.public_keys.ssh_public_key import SSHPublicKeyType
-from aspen_ssh.public_keys.ssh_public_key_factory import get_ssh_public_key
+from bless.ssh.certificates.rsa_certificate_builder import RSACertificateBuilder
+from bless.ssh.certificates.ed25519_certificate_builder import ED25519CertificateBuilder
+from bless.ssh.public_keys.ssh_public_key import SSHPublicKeyType
+from bless.ssh.public_keys.ssh_public_key_factory import get_ssh_public_key
 
 if TYPE_CHECKING:
-    from aspen_ssh.certificate_authorities import SSHCertificateAuthority
-    from aspen_ssh.certificates.ssh_certificate_builder import (
+    from bless.ssh.certificate_authorities import SSHCertificateAuthority
+    from bless.ssh.certificates.ssh_certificate_builder import (
         SSHCertificateBuilder,
         SSHCertificateType
     )

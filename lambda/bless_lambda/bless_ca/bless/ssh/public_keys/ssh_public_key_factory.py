@@ -5,7 +5,7 @@
 """
 from typing import Union
 
-from aspen_ssh.public_keys import ED25519PublicKey, RsaPublicKey, SSHPublicKeyType
+from bless.ssh.public_keys import ED25519PublicKey, RsaPublicKey, SSHPublicKeyType
 
 
 def get_ssh_public_key(ssh_public_key: str) -> Union[RsaPublicKey, ED25519PublicKey]:

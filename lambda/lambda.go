@@ -2,5 +2,5 @@ package lambda
 
 import "embed"
 
-//go:embed bless_lambda
+//go:embed all:bless_lambda
 var Files embed.FS

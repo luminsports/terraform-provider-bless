@@ -5,7 +5,7 @@
 """
 from typing import Literal
 
-from aspen_ssh.certificate_authorities import (
+from bless.ssh.certificate_authorities import (
     Ed25519CertificateAuthority,
     RSACertificateAuthority,
     SSHCertificateAuthority,

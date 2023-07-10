@@ -6,7 +6,7 @@ rsa-sha2-512 to support SHA2 public key signing algorithm
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_string
+from bless.ssh.protocol.ssh_protocol import pack_ssh_string
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import ed25519, rsa
 from cryptography.hazmat.primitives.serialization import load_pem_private_key

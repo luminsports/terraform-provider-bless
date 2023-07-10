@@ -7,10 +7,10 @@ import base64
 import os
 from typing import TYPE_CHECKING
 
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_string, pack_ssh_uint64, pack_ssh_uint32
+from bless.ssh.protocol.ssh_protocol import pack_ssh_string, pack_ssh_uint64, pack_ssh_uint32
 
 if TYPE_CHECKING:
-    from aspen_ssh.certificate_authorities import SSHCertificateAuthority
+    from bless.ssh.certificate_authorities import SSHCertificateAuthority
 
 
 class SSHCertificateType:

@@ -1,21 +1,21 @@
 package provider
 
 import (
-  "archive/zip"
-  "bytes"
-  "fmt"
-  "io"
-  "io/fs"
-  "os"
-  "path"
-  "path/filepath"
-  "sort"
-  "text/template"
+	"archive/zip"
+	"bytes"
+	"fmt"
+	"io"
+	"io/fs"
+	"os"
+	"path"
+	"path/filepath"
+	"sort"
+	"text/template"
 
-  "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-  "github.com/luminsports/terraform-provider-bless/internal/util"
-  "github.com/luminsports/terraform-provider-bless/lambda"
-  "github.com/pkg/errors"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/util"
+	"github.com/luminsports/terraform-provider-bless/lambda"
+	"github.com/pkg/errors"
 )
 
 const (
