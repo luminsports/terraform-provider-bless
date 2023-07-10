@@ -3,27 +3,21 @@
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.backends.openssl.rsa import RSAPrivateKey
-from typing import Literal, Union
-
 from aspen_ssh.certificate_authorities.ssh_certificate_authority import (
     SSHCertificateAuthority,
     SSHCertificateSignatureKeyType,
 )
-from aspen_ssh.public_keys import SSHPublicKeyType
-from aspen_ssh.protocol.ssh_protocol import pack_ssh_mpint, pack_ssh_string
+from aspen_ssh.protocol.ssh_protocol import pack_ssh_string
+from aspen_ssh.public_keys.ssh_public_key import SSHPublicKeyType
+from cryptography.hazmat.primitives.serialization import (
+    Encoding,
+    PublicFormat,
+)
 
 
-class RSACertificateAuthority(SSHCertificateAuthority):
+class Ed25519CertificateAuthority(SSHCertificateAuthority):
 
-    def __init__(
-        self,
-        pem_private_key: Union[bytes, RSAPrivateKey],
-        private_key_password: str = None,
-        cert_type: Literal['sha2', 'sha1'] = 'sha2',
-    ):
+    def __init__(self, pem_private_key: bytes, private_key_password: str = None):
         """
         RSA Certificate Authority used to sign certificates.
 
@@ -31,23 +25,12 @@ class RSACertificateAuthority(SSHCertificateAuthority):
         password, but that is not required.
         :param private_key_password: Password to decrypt the PEM RSA Private Key, if it is
         encrypted.  Which it should be.
-        :param cert_type: Sha version expected ("sha2" or "sha1")
         """
         super().__init__(pem_private_key, private_key_password)
+        self.public_key_type = SSHPublicKeyType.ED25519
+        self.signing_key_type = SSHCertificateSignatureKeyType.ED25519
 
-        if cert_type == "sha1":
-            self.public_key_type = SSHPublicKeyType.RSA
-            self.signing_key_type = SSHCertificateSignatureKeyType.RSA
-            self.algo = hashes.SHA1()
-        else:
-            self.public_key_type = SSHPublicKeyType.RSA
-            self.signing_key_type = SSHCertificateSignatureKeyType.RSA_SHA2
-            self.algo = hashes.SHA512()
-
-        ca_pub_numbers = self.private_key.public_key().public_numbers()
-
-        self.e = ca_pub_numbers.e
-        self.n = ca_pub_numbers.n
+        self.a = self.private_key.public_key().public_bytes(Encoding.Raw, PublicFormat.Raw)
 
     def get_signature_key(self) -> bytes:
         """
@@ -57,23 +40,22 @@ class RSACertificateAuthority(SSHCertificateAuthority):
         :return: SSH Public Key.
         """
         key = pack_ssh_string(self.public_key_type)
-        key += pack_ssh_mpint(self.e)
-        key += pack_ssh_mpint(self.n)
+        key += pack_ssh_string(self.a)
         return key
 
-    def sign(self, body):
+    def sign(self, body: bytes) -> bytes:
         """
         Sign the certificate body with the RSA private key.  Signatures are computed and
         encoded per RFC4253 section 6.6
+
         :param body: All other fields of the SSH Certificate, from the initial string to the
         signature key.
         :return: SSH RSA Signature.
         """
-        signature = self.private_key.sign(body, padding.PKCS1v15(), self.algo)
-
+        signature = self.private_key.sign(body)
         return self._serialize_signature(signature)
 
 
 __all__ = [
-    'RSACertificateAuthority',
+    'Ed25519CertificateAuthority',
 ]

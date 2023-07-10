@@ -3,17 +3,28 @@
     :copyright: (c) 2016 by Netflix Inc., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
-from bless.ssh.certificates.rsa_certificate_builder \
-    import RSACertificateBuilder
-from bless.ssh.certificates.ed25519_certificate_builder \
-    import ED25519CertificateBuilder
-from bless.ssh.public_keys.ssh_public_key import SSHPublicKeyType
-from bless.ssh.public_keys.ssh_public_key_factory import get_ssh_public_key
+from typing import TYPE_CHECKING
+from aspen_ssh.certificates.rsa_certificate_builder import RSACertificateBuilder
+from aspen_ssh.certificates.ed25519_certificate_builder import ED25519CertificateBuilder
+from aspen_ssh.public_keys.ssh_public_key import SSHPublicKeyType
+from aspen_ssh.public_keys.ssh_public_key_factory import get_ssh_public_key
+
+if TYPE_CHECKING:
+    from aspen_ssh.certificate_authorities import SSHCertificateAuthority
+    from aspen_ssh.certificates.ssh_certificate_builder import (
+        SSHCertificateBuilder,
+        SSHCertificateType
+    )
 
 
-def get_ssh_certificate_builder(ca, cert_type, public_key_to_sign):
+def get_ssh_certificate_builder(
+        ca: 'SSHCertificateAuthority',
+        cert_type: 'SSHCertificateType',
+        public_key_to_sign: str,
+) -> 'SSHCertificateBuilder':
     """
     Returns the proper SSHCertificateBuilder instance for the type of public key to be signed.
+
     :param ca: The SSHCertificateAuthority that will sign the certificate.  The
     SSHCertificateAuthority type does not need to be the same type as the SSHCertificateBuilder.
     :param cert_type: The SSHCertificateType.  Is this a User or Host certificate?

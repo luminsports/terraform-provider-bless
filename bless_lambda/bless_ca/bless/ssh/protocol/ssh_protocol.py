@@ -5,9 +5,10 @@
 """
 import binascii
 import struct
+from typing import Union
 
 
-def pack_ssh_mpint(mpint):
+def pack_ssh_mpint(mpint: int) -> bytes:
     """
     Packs multiple precision integers.
     See Section 5 of https://www.ietf.org/rfc/rfc4251.txt for more information.
@@ -26,22 +27,20 @@ def pack_ssh_mpint(mpint):
 
         # If the results needed an extra byte of padding, this will provide a leading 0x00
         hex_mpint = format(mpint, format_string)
-        bytes = binascii.unhexlify(hex_mpint)
+        mpint_bytes = binascii.unhexlify(hex_mpint)
     else:
         # Per RFC4251 a 0 value mpint results in a null string.
-        bytes = ''
+        mpint_bytes = ''
 
-    ret = pack_ssh_string(bytes)
-
-    return ret
+    return pack_ssh_string(mpint_bytes)
 
 
-def pack_ssh_string(string):
+def pack_ssh_string(string: Union[bytes, str]) -> bytes:
     """
     Packs arbitrary length binary strings.
     See Section 5 of https://www.ietf.org/rfc/rfc4251.txt for more information.
     :param string: String or Unicode string.  Unicode is encoded as utf-8.
-    :return: An SSH String stored as a unint32 representing the length of the input string,
+    :return: An SSH String stored as a uint32 representing the length of the input string,
     followed by that many bytes.
     """
     if isinstance(string, str):
@@ -49,13 +48,13 @@ def pack_ssh_string(string):
 
     str_len = len(string)
 
-    if len(string) > 4294967295:
+    if str_len > 4294967295:
         raise ValueError("String must be less than 2^32 bytes long.")
 
     return struct.pack('>I{}s'.format(str_len), str_len, string)
 
 
-def pack_ssh_uint64(i):
+def pack_ssh_uint64(i: int) -> bytes:
     """
     Packs a 64-bit unsigned integer.
     :param i: integer
@@ -69,7 +68,7 @@ def pack_ssh_uint64(i):
     return struct.pack('>Q', i)
 
 
-def pack_ssh_uint32(i):
+def pack_ssh_uint32(i: int) -> bytes:
     """
     Packs a 32-bit unsigned integer.
     :param i: integer or long.
@@ -83,7 +82,7 @@ def pack_ssh_uint32(i):
     return struct.pack('>I', i)
 
 
-def _hex_characters_length(mpint):
+def _hex_characters_length(mpint: int) -> int:
     """
     Subroutine for pack_ssh_mpint.
     :param mpint: Signed long or int to pack.
