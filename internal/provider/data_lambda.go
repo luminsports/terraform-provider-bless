@@ -1,19 +1,21 @@
 package provider
 
 import (
-	"archive/zip"
-	"bytes"
-	"io"
-	"os"
-	"path"
-	"path/filepath"
-	"sort"
-	"text/template"
+  "archive/zip"
+  "bytes"
+  "fmt"
+  "io"
+  "io/fs"
+  "os"
+  "path"
+  "path/filepath"
+  "sort"
+  "text/template"
 
-	"github.com/gobuffalo/packr"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/luminsports/terraform-provider-bless/internal/util"
-	"github.com/pkg/errors"
+  "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+  "github.com/luminsports/terraform-provider-bless/internal/util"
+  "github.com/luminsports/terraform-provider-bless/lambda"
+  "github.com/pkg/errors"
 )
 
 const (
@@ -162,15 +164,12 @@ func (l *resourceLambda) writeFileToZip(f io.Reader, writer *zip.Writer, path st
 
 // getBlessConfig reads and templetizes a bless config.
 func (l *resourceLambda) getBlessConfig(d *schema.ResourceData) (io.Reader, error) {
-	templateBox := packr.NewBox("../../bless_lambda")
-	tpl, err := templateBox.Open("bless_deploy.cfg.tpl")
+	file, err := lambda.Files.ReadFile("bless_lambda/bless_deploy.cfg.tpl")
+
 	if err != nil {
-		return nil, errors.Wrap(err, "Could not open pckr box for bless_deploy.cfg.tpl")
+		return nil, errors.Wrap(err, "Could not load template")
 	}
-	tplBytes, err := io.ReadAll(tpl)
-	if err != nil {
-		return nil, errors.Wrap(err, "Could not read bless_deploy.cfg.tpl")
-	}
+
 	t, err := template.
 		New("config").
 		Funcs(map[string]interface{}{
@@ -181,7 +180,7 @@ func (l *resourceLambda) getBlessConfig(d *schema.ResourceData) (io.Reader, erro
 				return "False"
 			},
 		}).
-		Parse(string(tplBytes))
+		Parse(string(file))
 
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not load template")
@@ -223,33 +222,39 @@ func (l *resourceLambda) archive(d *schema.ResourceData, _ interface{}) error {
 	writer := zip.NewWriter(outFile)
 	defer writer.Close()
 
-	// Add all the python lambda files to the zip
-	zipBox := packr.NewBox("../../bless_lambda/bless_ca")
-	// HACK: zipBox.Walk does not guarantee a stable iteration order
-	files := []string{}
-	err = zipBox.Walk(func(path string, f packr.File) error {
-		fileInfo, err := f.FileInfo()
+	filePaths := []string{}
+
+	walker := func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return errors.Wrapf(err, "Could not get file info for %s", path)
+			return err
 		}
-		if fileInfo.IsDir() {
+
+		if d.IsDir() {
 			return nil
 		}
-		files = append(files, path)
+
+		filePaths = append(filePaths, path)
 		return nil
-	})
+	}
+
+	err = fs.WalkDir(lambda.Files, ".", walker)
+
 	if err != nil {
-		return errors.Wrap(err, "could not walk zip")
+		return err
 	}
 
 	// Sort so stable adding of files to zip
-	sort.Strings(files)
-	for _, path := range files {
-		f, err := zipBox.Open(path)
+	sort.Strings(filePaths)
+	fmt.Print(filePaths)
+	for _, filePath := range filePaths {
+		f, err := lambda.Files.Open(filePath)
 		if err != nil {
-			return errors.Wrapf(err, "Could not open file %s", path)
+			return errors.Wrapf(err, "Could not open file %s", filePath)
 		}
-		err = l.writeFileToZip(f, writer, path)
+
+		relativePath, _ := filepath.Rel("bless_lambda/bless_ca", filePath)
+		err = l.writeFileToZip(f, writer, relativePath)
+
 		if err != nil {
 			return err
 		}
