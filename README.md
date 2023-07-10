@@ -1,7 +1,7 @@
-# Terraform-provider-bless
+# terraform-provider-bless
 ----
 
-**Please note**: If you believe you have found a security issue, _please responsibly disclose_ by contacting us at [security@chanzuckerberg.com](mailto:security@chanzuckerberg.com).
+This is a fork of [chanzuckerberg/bless](https://github.com/chanzuckerberg/terraform-provider-bless), updated to provide a darwin/arm64 binary, and updates to the BLESS lambda to provide support for ED25519 CA private keys.
 
 ----
 
