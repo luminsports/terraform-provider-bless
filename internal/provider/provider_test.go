@@ -1,6 +1,8 @@
 package provider_test
 
 import (
+	"context"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/kms"
@@ -34,7 +36,7 @@ func getTestProviders() (map[string]func() (*schema.Provider, error), *KMSMock) 
 	providers := map[string]func() (*schema.Provider, error){
 		"bless": func() (*schema.Provider, error) {
 			ca := provider.Provider()
-			ca.ConfigureFunc = func(s *schema.ResourceData) (interface{}, error) {
+			ca.ConfigureContextFunc = func(_ context.Context, s *schema.ResourceData) (interface{}, diag.Diagnostics) {
 				client := &aws.Client{
 					KMS: aws.KMS{Svc: kmsMock},
 				}

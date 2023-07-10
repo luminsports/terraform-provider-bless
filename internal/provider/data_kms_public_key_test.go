@@ -55,7 +55,7 @@ func TestKMSPublicKey(t *testing.T) {
 					r.True(ok)
 					r.Regexp(
 						regexp.MustCompile("^ecdsa-sha2-nistp384 "),
-						string(publicSSH))
+						publicSSH)
 					return nil
 				},
 			},

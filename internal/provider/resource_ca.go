@@ -20,7 +20,7 @@ const (
 	caPasswordBytes = 64
 )
 
-// CA is a bless CA resource
+// CA is a bless CA resource.
 func CA() *schema.Resource {
 	ca := newResourceCA()
 	return &schema.Resource{
@@ -29,7 +29,7 @@ func CA() *schema.Resource {
 		Delete: ca.Delete,
 
 		Schema: map[string]*schema.Schema{
-			schemaKmsKeyID: &schema.Schema{
+			schemaKmsKeyID: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The kms key with which we should encrypt the CA password.",
@@ -37,17 +37,17 @@ func CA() *schema.Resource {
 			},
 
 			// computed
-			schemaEncryptedPrivateKey: &schema.Schema{
+			schemaEncryptedPrivateKey: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the base64 encoded CA encrypted private key.",
 			},
-			schemaPublicKey: &schema.Schema{
+			schemaPublicKey: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the plaintext CA public key in openssh format.",
 			},
-			schemaEncryptedPassword: &schema.Schema{
+			schemaEncryptedPassword: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the kms encrypted password.",
@@ -56,14 +56,14 @@ func CA() *schema.Resource {
 	}
 }
 
-// resourceCA is a namespace
+// resourceCA is a namespace.
 type resourceCA struct{}
 
 func newResourceCA() *resourceCA {
 	return &resourceCA{}
 }
 
-// Create creates a CA
+// Create creates a CA.
 func (ca *resourceCA) Create(d *schema.ResourceData, meta interface{}) error {
 	awsClient, ok := meta.(*aws.Client)
 	if !ok {
@@ -87,18 +87,18 @@ func (ca *resourceCA) Create(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-// Read reads the ca
+// Read reads the ca.
 func (ca *resourceCA) Read(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-// Delete deletes the ca
+// Delete deletes the ca.
 func (ca *resourceCA) Delete(d *schema.ResourceData, meta interface{}) error {
 	d.SetId("")
 	return nil
 }
 
-// ------------ helpers ------------------
+// ------------ helpers ------------------.
 func (ca *resourceCA) createKeypair() (*util.CA, error) {
 	// generate private key
 	privateKey, err := rsa.GenerateKey(rand.Reader, keySize)

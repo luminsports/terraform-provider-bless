@@ -28,7 +28,7 @@ func TestCreate(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: providers,
 		Steps: []resource.TestStep{
-			resource.TestStep{
+			{
 				Config: `
 				provider "bless" {
 					region = "us-east-1"
@@ -66,7 +66,7 @@ func TestCreate(t *testing.T) {
 					a.True(ok)
 					a.Regexp(
 						regexp.MustCompile("^ssh-rsa "),
-						string(publicSSH))
+						publicSSH)
 					return nil
 				},
 			},

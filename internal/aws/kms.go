@@ -11,17 +11,17 @@ import (
 	"github.com/pkg/errors"
 )
 
-// KMS is a kms client
+// KMS is a kms client.
 type KMS struct {
 	Svc kmsiface.KMSAPI
 }
 
-// NewKMS returns a KMS client
+// NewKMS returns a KMS client.
 func NewKMS(s *session.Session, creds *credentials.Credentials) KMS {
 	return KMS{kms.New(s, &aws.Config{Credentials: creds})}
 }
 
-// EncryptBytes encrypts the plaintext using the keyID key, result is base64 encoded
+// EncryptBytes encrypts the plaintext using the keyID key, result is base64 encoded.
 func (k *KMS) EncryptBytes(plaintext []byte, keyID string) (string, error) {
 	input := &kms.EncryptInput{}
 	input.SetKeyId(keyID).SetPlaintext(plaintext)

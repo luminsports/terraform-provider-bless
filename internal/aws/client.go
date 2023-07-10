@@ -8,12 +8,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-// Client is an AWS client
+// Client is an AWS client.
 type Client struct {
 	KMS KMS
 }
 
-// NewClient returns a new aws client
+// NewClient returns a new aws client.
 func NewClient(d *schema.ResourceData) (*Client, error) {
 	regionOverride := d.Get("region").(string)
 	var region *string

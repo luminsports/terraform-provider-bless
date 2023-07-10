@@ -20,7 +20,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-// HashForState hashes the state
+// HashForState hashes the state.
 func HashForState(value string) string {
 	if value == "" {
 		return ""
@@ -29,7 +29,7 @@ func HashForState(value string) string {
 	return hex.EncodeToString(hash[:])
 }
 
-// HashFileForState hashes a file's contents
+// HashFileForState hashes a file's contents.
 func HashFileForState(path string) (string, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -45,7 +45,7 @@ func HashFileForState(path string) (string, error) {
 	return base64.StdEncoding.EncodeToString(h.Sum(nil)), nil
 }
 
-// GenerateRandomBytes generates random bytes
+// GenerateRandomBytes generates random bytes.
 func GenerateRandomBytes(n uint) ([]byte, error) {
 	b := make([]byte, n)
 	_, err := rand.Read(b)
@@ -55,14 +55,14 @@ func GenerateRandomBytes(n uint) ([]byte, error) {
 	return b, nil
 }
 
-// CA has information around a CA
+// CA has information around a CA.
 type CA struct {
 	PublicKey              string
 	B64EncryptedPrivateKey string
 	Password               []byte
 }
 
-// NewCA generates the CA components from a private key
+// NewCA generates the CA components from a private key.
 func NewCA(privateKey crypto.PrivateKey, publicKey interface{}, passwordBytes uint) (*CA, error) {
 	block := &pem.Block{}
 

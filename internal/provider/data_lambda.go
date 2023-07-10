@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"bytes"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -26,78 +25,78 @@ const (
 	schemaKMSAuthValidateRemoteUsernameAgainstIAMGroups = "kmsauth_validate_remote_user"
 	schemaKMSAuthIAMGroupNameFormat                     = "kmsauth_iam_group_name_format"
 
-	// SchemaOutputBase64Sha256 is the base64 encoded sha256 of bless.zip contents
+	// SchemaOutputBase64Sha256 is the base64 encoded sha256 of bless.zip contents.
 	SchemaOutputBase64Sha256 = "output_base64sha256"
-	// schemaOutputPath is the output_path of the zip
+	// schemaOutputPath is the output_path of the zip.
 	schemaOutputPath = "output_path"
 )
 
-// Lambda is a bless lambda resource
+// Lambda is a bless lambda resource.
 func Lambda() *schema.Resource {
 	lambda := newResourceLambda()
 	return &schema.Resource{
 		Read: lambda.Read,
 
 		Schema: map[string]*schema.Schema{
-			schemaEncryptedPassword: &schema.Schema{
+			schemaEncryptedPassword: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The kms encrypted password for the CA",
 				ForceNew:    true,
 			},
-			schemaEncryptedPrivateKey: &schema.Schema{
+			schemaEncryptedPrivateKey: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The encrypted CA private key",
 				ForceNew:    true,
 			},
-			schemaServiceName: &schema.Schema{
+			schemaServiceName: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The name of the bless CA service. Used for kmsauth.",
 				ForceNew:    true,
 			},
-			schemaKMSAuthKeyID: &schema.Schema{
+			schemaKMSAuthKeyID: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The kmsauth key ID",
 				ForceNew:    true,
 			},
-			schemaOutputPath: &schema.Schema{
+			schemaOutputPath: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "Path where the bless zip archive will be written",
 				ForceNew:    true,
 			},
-			schemaLoggingLevel: &schema.Schema{
+			schemaLoggingLevel: {
 				Type:        schema.TypeString,
 				Default:     "INFO",
 				Optional:    true,
 				ForceNew:    true,
 				Description: "Bless lambda logging level",
 			},
-			schemaUsernameValidation: &schema.Schema{
+			schemaUsernameValidation: {
 				Type:        schema.TypeString,
 				Default:     "email",
 				Optional:    true,
 				ForceNew:    true,
 				Description: "Bless lambda default username validation",
 			},
-			schemaKMSAuthRemoteUsernamesAllowed: &schema.Schema{
+			schemaKMSAuthRemoteUsernamesAllowed: {
 				Type:        schema.TypeString,
 				Default:     "*",
 				Optional:    true,
 				ForceNew:    true,
 				Description: "The remote usernames allowed. \"*\" indicates any",
 			},
-			schemaKMSAuthValidateRemoteUsernameAgainstIAMGroups: &schema.Schema{
+			schemaKMSAuthValidateRemoteUsernameAgainstIAMGroups: {
 				Type:        schema.TypeBool,
 				Default:     true,
 				Optional:    true,
 				ForceNew:    true,
 				Description: "If bless should validate a remote username against an IAM group membership",
 			},
-			schemaKMSAuthIAMGroupNameFormat: &schema.Schema{
+			schemaKMSAuthIAMGroupNameFormat: {
 				Type:        schema.TypeString,
 				Default:     "ssh-{}",
 				Optional:    true,
@@ -106,7 +105,7 @@ func Lambda() *schema.Resource {
 			},
 
 			// computed
-			SchemaOutputBase64Sha256: &schema.Schema{
+			SchemaOutputBase64Sha256: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "Base64Sha256 or temporary bless.zip contents",
@@ -137,7 +136,7 @@ type blessConfig struct {
 	KMSAuthIAMGroupNameFormat string
 }
 
-// resourceLambda is a namespace
+// resourceLambda is a namespace.
 type resourceLambda struct{}
 
 func newResourceLambda() *resourceLambda {
@@ -161,14 +160,14 @@ func (l *resourceLambda) writeFileToZip(f io.Reader, writer *zip.Writer, path st
 	return errors.Wrapf(err, "Could not add file %s to zip", relativeName)
 }
 
-// getBlessConfig reads and templetizes a bless config
+// getBlessConfig reads and templetizes a bless config.
 func (l *resourceLambda) getBlessConfig(d *schema.ResourceData) (io.Reader, error) {
 	templateBox := packr.NewBox("../../bless_lambda")
 	tpl, err := templateBox.Open("bless_deploy.cfg.tpl")
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not open pckr box for bless_deploy.cfg.tpl")
 	}
-	tplBytes, err := ioutil.ReadAll(tpl)
+	tplBytes, err := io.ReadAll(tpl)
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not read bless_deploy.cfg.tpl")
 	}
@@ -204,8 +203,8 @@ func (l *resourceLambda) getBlessConfig(d *schema.ResourceData) (io.Reader, erro
 	return buff, errors.Wrap(err, "Could not templetize config")
 }
 
-// archive generates the zip archive
-func (l *resourceLambda) archive(d *schema.ResourceData, meta interface{}) error {
+// archive generates the zip archive.
+func (l *resourceLambda) archive(d *schema.ResourceData, _ interface{}) error {
 	outputPath := d.Get(schemaOutputPath).(string)
 	outputDirectory := path.Dir(outputPath)
 	if outputDirectory != "" {
@@ -265,7 +264,7 @@ func (l *resourceLambda) archive(d *schema.ResourceData, meta interface{}) error
 	return l.writeFileToZip(blessConfig, writer, "bless_deploy.cfg")
 }
 
-// Create bundles the lambda code and configuration into a zip that can be uploaded to AWS lambda
+// Create bundles the lambda code and configuration into a zip that can be uploaded to AWS lambda.
 func (l *resourceLambda) Read(d *schema.ResourceData, meta interface{}) error {
 	outputPath := d.Get(schemaOutputPath).(string)
 	err := l.archive(d, meta)

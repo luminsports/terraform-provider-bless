@@ -28,7 +28,7 @@ func TestCreateECDSA(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: providers,
 		Steps: []resource.TestStep{
-			resource.TestStep{
+			{
 				Config: `
 				provider "bless" {
 					region = "us-east-1"
@@ -65,7 +65,7 @@ func TestCreateECDSA(t *testing.T) {
 					a.True(ok)
 					a.Regexp(
 						regexp.MustCompile("^ecdsa-sha2-nistp521 "),
-						string(publicSSH))
+						publicSSH)
 					return nil
 				},
 			},

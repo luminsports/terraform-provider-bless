@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ECDSACA is an ecdsa CA resource
+// ECDSACA is an ecdsa CA resource.
 func ECDSACA() *schema.Resource {
 	ca := newResourceECDSACA()
 	return &schema.Resource{
@@ -20,7 +20,7 @@ func ECDSACA() *schema.Resource {
 		Delete: ca.Delete,
 
 		Schema: map[string]*schema.Schema{
-			schemaKmsKeyID: &schema.Schema{
+			schemaKmsKeyID: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The kms key with which we should encrypt the CA password.",
@@ -28,17 +28,17 @@ func ECDSACA() *schema.Resource {
 			},
 
 			// computed
-			schemaEncryptedPrivateKey: &schema.Schema{
+			schemaEncryptedPrivateKey: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the base64 encoded CA encrypted private key.",
 			},
-			schemaPublicKey: &schema.Schema{
+			schemaPublicKey: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the plaintext CA public key in openssh format.",
 			},
-			schemaEncryptedPassword: &schema.Schema{
+			schemaEncryptedPassword: {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: "This is the kms encrypted password.",
@@ -47,14 +47,14 @@ func ECDSACA() *schema.Resource {
 	}
 }
 
-// resourceCA is a namespace
+// resourceCA is a namespace.
 type resourceECDSACA struct{}
 
 func newResourceECDSACA() *resourceECDSACA {
 	return &resourceECDSACA{}
 }
 
-// Create creates a CA
+// Create creates a CA.
 func (ca *resourceECDSACA) Create(d *schema.ResourceData, meta interface{}) error {
 	awsClient, ok := meta.(*aws.Client)
 	if !ok {
@@ -79,18 +79,18 @@ func (ca *resourceECDSACA) Create(d *schema.ResourceData, meta interface{}) erro
 	return nil
 }
 
-// Read reads the ca
+// Read reads the ca.
 func (ca *resourceECDSACA) Read(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-// Delete deletes the ca
+// Delete deletes the ca.
 func (ca *resourceECDSACA) Delete(d *schema.ResourceData, meta interface{}) error {
 	d.SetId("")
 	return nil
 }
 
-// ------------ helpers ------------------
+// ------------ helpers ------------------.
 func (ca *resourceECDSACA) createKeypair() (*util.CA, error) {
 	// generate private key
 	privateKey, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)

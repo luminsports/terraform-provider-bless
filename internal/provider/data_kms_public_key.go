@@ -11,8 +11,6 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-const ()
-
 func KMSPublicKey() *schema.Resource {
 	kmsPublicKey := newDataKMSPublicKey()
 

@@ -3,6 +3,8 @@
 issues:
   max-per-linter: 0
   max-same-issues: 0
+  exclude:
+    - "SA1019: x509.EncryptPEMBlock has been deprecated.*"
 
 linters:
   disable-all: true
@@ -10,7 +12,6 @@ linters:
     - durationcheck
     - errcheck
     - exportloopref
-    - forcetypeassert
     - godot
     - gofmt
     - gosimple
@@ -22,6 +23,5 @@ linters:
     - staticcheck
     - tenv
     - unconvert
-    - unparam
     - unused
     - vet
