@@ -1,13 +1,13 @@
 package provider
 
 import (
-  "crypto/ed25519"
-  "crypto/rand"
+	"crypto/ed25519"
+	"crypto/rand"
 
-  "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-  "github.com/luminsports/terraform-provider-bless/internal/aws"
-  "github.com/luminsports/terraform-provider-bless/internal/util"
-  "github.com/pkg/errors"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/luminsports/terraform-provider-bless/internal/aws"
+	"github.com/luminsports/terraform-provider-bless/internal/util"
+	"github.com/pkg/errors"
 )
 
 // ED25519CA is an ED25519 CA resource.
