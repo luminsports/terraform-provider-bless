@@ -481,7 +481,7 @@ else:
 try:
     from collections import ChainMap
 except ImportError: # pragma: no cover
-    from collections import MutableMapping
+    from collections.abc import MutableMapping
 
     try:
         from reprlib import recursive_repr as _recursive_repr

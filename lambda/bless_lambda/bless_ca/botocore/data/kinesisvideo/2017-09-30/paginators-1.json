@@ -5,6 +5,24 @@
       "limit_key": "MaxResults",
       "output_token": "NextToken",
       "result_key": "StreamInfoList"
+    },
+    "ListSignalingChannels": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "ChannelInfoList"
+    },
+    "DescribeMappedResourceConfiguration": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "MappedResourceConfigurationList"
+    },
+    "ListEdgeAgentConfigurations": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "EdgeConfigs"
     }
   }
 }

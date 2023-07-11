@@ -31,7 +31,7 @@ class SSHPublicKey:
         self.key_comment = None
 
         try:
-            self.public_key = load_ssh_public_key(public_key.encode('ascii'))
+            self.public_key = load_ssh_public_key(public_key.encode('ascii'), None)
         except ValueError:
             raise ValueError("Public Key is not the correct type or format")
 

@@ -32,8 +32,9 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"bless_ca":       CA(),
-			"bless_ecdsa_ca": ECDSACA(),
+			"bless_ca":         CA(),
+			"bless_ecdsa_ca":   ECDSACA(),
+			"bless_ed25519_ca": ED25519CA(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"bless_lambda":         Lambda(),

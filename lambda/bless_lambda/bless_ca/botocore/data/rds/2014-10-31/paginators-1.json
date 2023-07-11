@@ -174,6 +174,42 @@
       "limit_key": "MaxRecords",
       "output_token": "Marker",
       "result_key": "DBClusterEndpoints"
+    },
+    "DescribeDBProxies": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "DBProxies"
+    },
+    "DescribeDBProxyTargetGroups": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "TargetGroups"
+    },
+    "DescribeDBProxyTargets": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "Targets"
+    },
+    "DescribeExportTasks": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "ExportTasks"
+    },
+    "DescribeDBProxyEndpoints": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "DBProxyEndpoints"
+    },
+    "DescribeBlueGreenDeployments": {
+      "input_token": "Marker",
+      "limit_key": "MaxRecords",
+      "output_token": "Marker",
+      "result_key": "BlueGreenDeployments"
     }
   }
 }

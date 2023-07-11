@@ -25,7 +25,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Associates a skill with the organization under the customer's AWS account. If a skill is private, the user implicitly accepts access to this skill during enablement.</p>"
+      "documentation":"<p>Associates a skill with the organization under the customer's AWS account. If a skill is private, the user implicitly accepts access to this skill during enablement.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateContactWithAddressBook":{
       "name":"AssociateContactWithAddressBook",
@@ -38,7 +40,9 @@
       "errors":[
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>Associates a contact with a given address book.</p>"
+      "documentation":"<p>Associates a contact with a given address book.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateDeviceWithNetworkProfile":{
       "name":"AssociateDeviceWithNetworkProfile",
@@ -53,7 +57,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"DeviceNotRegisteredException"}
       ],
-      "documentation":"<p>Associates a device with the specified network profile.</p>"
+      "documentation":"<p>Associates a device with the specified network profile.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateDeviceWithRoom":{
       "name":"AssociateDeviceWithRoom",
@@ -68,7 +74,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"DeviceNotRegisteredException"}
       ],
-      "documentation":"<p>Associates a device with a given room. This applies all the settings from the room profile to the device, and all the skills in any skill groups added to that room. This operation requires the device to be online, or else a manual sync is required. </p>"
+      "documentation":"<p>Associates a device with a given room. This applies all the settings from the room profile to the device, and all the skills in any skill groups added to that room. This operation requires the device to be online, or else a manual sync is required. </p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateSkillGroupWithRoom":{
       "name":"AssociateSkillGroupWithRoom",
@@ -81,7 +89,9 @@
       "errors":[
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Associates a skill group with a given room. This enables all skills in the associated skill group on all devices in the room.</p>"
+      "documentation":"<p>Associates a skill group with a given room. This enables all skills in the associated skill group on all devices in the room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateSkillWithSkillGroup":{
       "name":"AssociateSkillWithSkillGroup",
@@ -96,7 +106,9 @@
         {"shape":"NotFoundException"},
         {"shape":"SkillNotLinkedException"}
       ],
-      "documentation":"<p>Associates a skill with a skill group.</p>"
+      "documentation":"<p>Associates a skill with a skill group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "AssociateSkillWithUsers":{
       "name":"AssociateSkillWithUsers",
@@ -110,7 +122,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Makes a private skill available for enrolled users to enable on their devices.</p>"
+      "documentation":"<p>Makes a private skill available for enrolled users to enable on their devices.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateAddressBook":{
       "name":"CreateAddressBook",
@@ -124,7 +138,9 @@
         {"shape":"AlreadyExistsException"},
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>Creates an address book with the specified details.</p>"
+      "documentation":"<p>Creates an address book with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateBusinessReportSchedule":{
       "name":"CreateBusinessReportSchedule",
@@ -137,7 +153,9 @@
       "errors":[
         {"shape":"AlreadyExistsException"}
       ],
-      "documentation":"<p>Creates a recurring schedule for usage reports to deliver to the specified S3 location with a specified daily or weekly interval.</p>"
+      "documentation":"<p>Creates a recurring schedule for usage reports to deliver to the specified S3 location with a specified daily or weekly interval.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateConferenceProvider":{
       "name":"CreateConferenceProvider",
@@ -150,7 +168,9 @@
       "errors":[
         {"shape":"AlreadyExistsException"}
       ],
-      "documentation":"<p>Adds a new conference provider under the user's AWS account.</p>"
+      "documentation":"<p>Adds a new conference provider under the user's AWS account.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateContact":{
       "name":"CreateContact",
@@ -164,7 +184,9 @@
         {"shape":"AlreadyExistsException"},
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>Creates a contact with the specified details.</p>"
+      "documentation":"<p>Creates a contact with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateGatewayGroup":{
       "name":"CreateGatewayGroup",
@@ -178,7 +200,9 @@
         {"shape":"AlreadyExistsException"},
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>Creates a gateway group with the specified details.</p>"
+      "documentation":"<p>Creates a gateway group with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateNetworkProfile":{
       "name":"CreateNetworkProfile",
@@ -195,7 +219,9 @@
         {"shape":"InvalidCertificateAuthorityException"},
         {"shape":"InvalidServiceLinkedRoleStateException"}
       ],
-      "documentation":"<p>Creates a network profile with the specified details.</p>"
+      "documentation":"<p>Creates a network profile with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateProfile":{
       "name":"CreateProfile",
@@ -210,7 +236,9 @@
         {"shape":"AlreadyExistsException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Creates a new room profile with the specified details.</p>"
+      "documentation":"<p>Creates a new room profile with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateRoom":{
       "name":"CreateRoom",
@@ -224,7 +252,9 @@
         {"shape":"AlreadyExistsException"},
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>Creates a room with the specified details.</p>"
+      "documentation":"<p>Creates a room with the specified details.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateSkillGroup":{
       "name":"CreateSkillGroup",
@@ -239,7 +269,9 @@
         {"shape":"LimitExceededException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Creates a skill group with a specified name and description.</p>"
+      "documentation":"<p>Creates a skill group with a specified name and description.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "CreateUser":{
       "name":"CreateUser",
@@ -254,7 +286,9 @@
         {"shape":"LimitExceededException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Creates a user.</p>"
+      "documentation":"<p>Creates a user.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteAddressBook":{
       "name":"DeleteAddressBook",
@@ -268,7 +302,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes an address book by the address book ARN.</p>"
+      "documentation":"<p>Deletes an address book by the address book ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteBusinessReportSchedule":{
       "name":"DeleteBusinessReportSchedule",
@@ -282,7 +318,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes the recurring report delivery schedule with the specified schedule ARN.</p>"
+      "documentation":"<p>Deletes the recurring report delivery schedule with the specified schedule ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteConferenceProvider":{
       "name":"DeleteConferenceProvider",
@@ -295,7 +333,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Deletes a conference provider.</p>"
+      "documentation":"<p>Deletes a conference provider.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteContact":{
       "name":"DeleteContact",
@@ -309,7 +349,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes a contact by the contact ARN.</p>"
+      "documentation":"<p>Deletes a contact by the contact ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteDevice":{
       "name":"DeleteDevice",
@@ -324,7 +366,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidCertificateAuthorityException"}
       ],
-      "documentation":"<p>Removes a device from Alexa For Business.</p>"
+      "documentation":"<p>Removes a device from Alexa For Business.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteDeviceUsageData":{
       "name":"DeleteDeviceUsageData",
@@ -339,7 +383,9 @@
         {"shape":"DeviceNotRegisteredException"},
         {"shape":"LimitExceededException"}
       ],
-      "documentation":"<p>When this action is called for a specified shared device, it allows authorized users to delete the device's entire previous history of voice input data. This action can be called once every 24 hours for a specific shared device. </p>"
+      "documentation":"<p>When this action is called for a specified shared device, it allows authorized users to delete the device's entire previous history of voice input data and associated response data. This action can be called once every 24 hours for a specific shared device.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteGatewayGroup":{
       "name":"DeleteGatewayGroup",
@@ -352,7 +398,9 @@
       "errors":[
         {"shape":"ResourceAssociatedException"}
       ],
-      "documentation":"<p>Deletes a gateway group.</p>"
+      "documentation":"<p>Deletes a gateway group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteNetworkProfile":{
       "name":"DeleteNetworkProfile",
@@ -367,7 +415,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Deletes a network profile by the network profile ARN.</p>"
+      "documentation":"<p>Deletes a network profile by the network profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteProfile":{
       "name":"DeleteProfile",
@@ -381,7 +431,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes a room profile by the profile ARN.</p>"
+      "documentation":"<p>Deletes a room profile by the profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteRoom":{
       "name":"DeleteRoom",
@@ -395,7 +447,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes a room by the room ARN.</p>"
+      "documentation":"<p>Deletes a room by the room ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteRoomSkillParameter":{
       "name":"DeleteRoomSkillParameter",
@@ -408,7 +462,9 @@
       "errors":[
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes room skill parameter details by room, skill, and parameter key ID.</p>"
+      "documentation":"<p>Deletes room skill parameter details by room, skill, and parameter key ID.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteSkillAuthorization":{
       "name":"DeleteSkillAuthorization",
@@ -422,7 +478,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Unlinks a third-party account from a skill.</p>"
+      "documentation":"<p>Unlinks a third-party account from a skill.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteSkillGroup":{
       "name":"DeleteSkillGroup",
@@ -436,7 +494,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes a skill group by skill group ARN.</p>"
+      "documentation":"<p>Deletes a skill group by skill group ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DeleteUser":{
       "name":"DeleteUser",
@@ -450,7 +510,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Deletes a specified user by user ARN and enrollment ARN.</p>"
+      "documentation":"<p>Deletes a specified user by user ARN and enrollment ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DisassociateContactFromAddressBook":{
       "name":"DisassociateContactFromAddressBook",
@@ -460,7 +522,9 @@
       },
       "input":{"shape":"DisassociateContactFromAddressBookRequest"},
       "output":{"shape":"DisassociateContactFromAddressBookResponse"},
-      "documentation":"<p>Disassociates a contact from a given address book.</p>"
+      "documentation":"<p>Disassociates a contact from a given address book.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DisassociateDeviceFromRoom":{
       "name":"DisassociateDeviceFromRoom",
@@ -474,7 +538,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"DeviceNotRegisteredException"}
       ],
-      "documentation":"<p>Disassociates a device from its current room. The device continues to be connected to the Wi-Fi network and is still registered to the account. The device settings and skills are removed from the room.</p>"
+      "documentation":"<p>Disassociates a device from its current room. The device continues to be connected to the Wi-Fi network and is still registered to the account. The device settings and skills are removed from the room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DisassociateSkillFromSkillGroup":{
       "name":"DisassociateSkillFromSkillGroup",
@@ -488,7 +554,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Disassociates a skill from a skill group.</p>"
+      "documentation":"<p>Disassociates a skill from a skill group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DisassociateSkillFromUsers":{
       "name":"DisassociateSkillFromUsers",
@@ -502,7 +570,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Makes a private skill unavailable for enrolled users and prevents them from enabling it on their devices.</p>"
+      "documentation":"<p>Makes a private skill unavailable for enrolled users and prevents them from enabling it on their devices.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "DisassociateSkillGroupFromRoom":{
       "name":"DisassociateSkillGroupFromRoom",
@@ -515,7 +585,9 @@
       "errors":[
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Disassociates a skill group from a specified room. This disables all skills in the skill group on all devices in the room.</p>"
+      "documentation":"<p>Disassociates a skill group from a specified room. This disables all skills in the skill group on all devices in the room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ForgetSmartHomeAppliances":{
       "name":"ForgetSmartHomeAppliances",
@@ -528,7 +600,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Forgets smart home appliances associated to a room.</p>"
+      "documentation":"<p>Forgets smart home appliances associated to a room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetAddressBook":{
       "name":"GetAddressBook",
@@ -541,7 +615,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets address the book details by the address book ARN.</p>"
+      "documentation":"<p>Gets address the book details by the address book ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetConferencePreference":{
       "name":"GetConferencePreference",
@@ -554,7 +630,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Retrieves the existing conference preferences.</p>"
+      "documentation":"<p>Retrieves the existing conference preferences.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetConferenceProvider":{
       "name":"GetConferenceProvider",
@@ -567,7 +645,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets details about a specific conference provider.</p>"
+      "documentation":"<p>Gets details about a specific conference provider.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetContact":{
       "name":"GetContact",
@@ -580,7 +660,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets the contact details by the contact ARN.</p>"
+      "documentation":"<p>Gets the contact details by the contact ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetDevice":{
       "name":"GetDevice",
@@ -593,7 +675,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets the details of a device by device ARN.</p>"
+      "documentation":"<p>Gets the details of a device by device ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetGateway":{
       "name":"GetGateway",
@@ -606,7 +690,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Retrieves the details of a gateway.</p>"
+      "documentation":"<p>Retrieves the details of a gateway.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetGatewayGroup":{
       "name":"GetGatewayGroup",
@@ -619,7 +705,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Retrieves the details of a gateway group.</p>"
+      "documentation":"<p>Retrieves the details of a gateway group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetInvitationConfiguration":{
       "name":"GetInvitationConfiguration",
@@ -632,7 +720,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Retrieves the configured values for the user enrollment invitation email template.</p>"
+      "documentation":"<p>Retrieves the configured values for the user enrollment invitation email template.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetNetworkProfile":{
       "name":"GetNetworkProfile",
@@ -646,7 +736,9 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidSecretsManagerResourceException"}
       ],
-      "documentation":"<p>Gets the network profile details by the network profile ARN.</p>"
+      "documentation":"<p>Gets the network profile details by the network profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetProfile":{
       "name":"GetProfile",
@@ -659,7 +751,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets the details of a room profile by profile ARN.</p>"
+      "documentation":"<p>Gets the details of a room profile by profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetRoom":{
       "name":"GetRoom",
@@ -672,7 +766,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets room details by room ARN.</p>"
+      "documentation":"<p>Gets room details by room ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetRoomSkillParameter":{
       "name":"GetRoomSkillParameter",
@@ -685,7 +781,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets room skill parameter details by room, skill, and parameter key ARN.</p>"
+      "documentation":"<p>Gets room skill parameter details by room, skill, and parameter key ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "GetSkillGroup":{
       "name":"GetSkillGroup",
@@ -698,7 +796,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Gets skill group details by skill group ARN.</p>"
+      "documentation":"<p>Gets skill group details by skill group ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListBusinessReportSchedules":{
       "name":"ListBusinessReportSchedules",
@@ -708,7 +808,9 @@
       },
       "input":{"shape":"ListBusinessReportSchedulesRequest"},
       "output":{"shape":"ListBusinessReportSchedulesResponse"},
-      "documentation":"<p>Lists the details of the schedules that a user configured.</p>"
+      "documentation":"<p>Lists the details of the schedules that a user configured. A download URL of the report associated with each schedule is returned every time this action is called. A new download URL is returned each time, and is valid for 24 hours.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListConferenceProviders":{
       "name":"ListConferenceProviders",
@@ -718,7 +820,9 @@
       },
       "input":{"shape":"ListConferenceProvidersRequest"},
       "output":{"shape":"ListConferenceProvidersResponse"},
-      "documentation":"<p>Lists conference providers under a specific AWS account.</p>"
+      "documentation":"<p>Lists conference providers under a specific AWS account.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListDeviceEvents":{
       "name":"ListDeviceEvents",
@@ -731,7 +835,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Lists the device event history, including device connection status, for up to 30 days.</p>"
+      "documentation":"<p>Lists the device event history, including device connection status, for up to 30 days.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListGatewayGroups":{
       "name":"ListGatewayGroups",
@@ -741,7 +847,9 @@
       },
       "input":{"shape":"ListGatewayGroupsRequest"},
       "output":{"shape":"ListGatewayGroupsResponse"},
-      "documentation":"<p>Retrieves a list of gateway group summaries. Use GetGatewayGroup to retrieve details of a specific gateway group.</p>"
+      "documentation":"<p>Retrieves a list of gateway group summaries. Use GetGatewayGroup to retrieve details of a specific gateway group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListGateways":{
       "name":"ListGateways",
@@ -751,7 +859,9 @@
       },
       "input":{"shape":"ListGatewaysRequest"},
       "output":{"shape":"ListGatewaysResponse"},
-      "documentation":"<p>Retrieves a list of gateway summaries. Use GetGateway to retrieve details of a specific gateway. An optional gateway group ARN can be provided to only retrieve gateway summaries of gateways that are associated with that gateway group ARN.</p>"
+      "documentation":"<p>Retrieves a list of gateway summaries. Use GetGateway to retrieve details of a specific gateway. An optional gateway group ARN can be provided to only retrieve gateway summaries of gateways that are associated with that gateway group ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListSkills":{
       "name":"ListSkills",
@@ -761,7 +871,9 @@
       },
       "input":{"shape":"ListSkillsRequest"},
       "output":{"shape":"ListSkillsResponse"},
-      "documentation":"<p>Lists all enabled skills in a specific skill group.</p>"
+      "documentation":"<p>Lists all enabled skills in a specific skill group.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListSkillsStoreCategories":{
       "name":"ListSkillsStoreCategories",
@@ -771,7 +883,9 @@
       },
       "input":{"shape":"ListSkillsStoreCategoriesRequest"},
       "output":{"shape":"ListSkillsStoreCategoriesResponse"},
-      "documentation":"<p>Lists all categories in the Alexa skill store.</p>"
+      "documentation":"<p>Lists all categories in the Alexa skill store.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListSkillsStoreSkillsByCategory":{
       "name":"ListSkillsStoreSkillsByCategory",
@@ -781,7 +895,9 @@
       },
       "input":{"shape":"ListSkillsStoreSkillsByCategoryRequest"},
       "output":{"shape":"ListSkillsStoreSkillsByCategoryResponse"},
-      "documentation":"<p>Lists all skills in the Alexa skill store by category.</p>"
+      "documentation":"<p>Lists all skills in the Alexa skill store by category.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListSmartHomeAppliances":{
       "name":"ListSmartHomeAppliances",
@@ -794,7 +910,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Lists all of the smart home appliances associated with a room.</p>"
+      "documentation":"<p>Lists all of the smart home appliances associated with a room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ListTags":{
       "name":"ListTags",
@@ -807,7 +925,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Lists all tags for the specified resource.</p>"
+      "documentation":"<p>Lists all tags for the specified resource.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "PutConferencePreference":{
       "name":"PutConferencePreference",
@@ -820,7 +940,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Sets the conference preferences on a specific conference provider at the account level.</p>"
+      "documentation":"<p>Sets the conference preferences on a specific conference provider at the account level.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "PutInvitationConfiguration":{
       "name":"PutInvitationConfiguration",
@@ -834,7 +956,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Configures the email template for the user enrollment invitation with the specified attributes.</p>"
+      "documentation":"<p>Configures the email template for the user enrollment invitation with the specified attributes.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "PutRoomSkillParameter":{
       "name":"PutRoomSkillParameter",
@@ -847,7 +971,9 @@
       "errors":[
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates room skill parameter details by room, skill, and parameter key ID. Not all skills have a room skill parameter.</p>"
+      "documentation":"<p>Updates room skill parameter details by room, skill, and parameter key ID. Not all skills have a room skill parameter.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "PutSkillAuthorization":{
       "name":"PutSkillAuthorization",
@@ -861,7 +987,9 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Links a user's account to a third-party skill provider. If this API operation is called by an assumed IAM role, the skill being linked must be a private skill. Also, the skill must be owned by the AWS account that assumed the IAM role.</p>"
+      "documentation":"<p>Links a user's account to a third-party skill provider. If this API operation is called by an assumed IAM role, the skill being linked must be a private skill. Also, the skill must be owned by the AWS account that assumed the IAM role.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "RegisterAVSDevice":{
       "name":"RegisterAVSDevice",
@@ -874,9 +1002,12 @@
       "errors":[
         {"shape":"LimitExceededException"},
         {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
         {"shape":"InvalidDeviceException"}
       ],
-      "documentation":"<p>Registers an Alexa-enabled device built by an Original Equipment Manufacturer (OEM) using Alexa Voice Service (AVS).</p>"
+      "documentation":"<p>Registers an Alexa-enabled device built by an Original Equipment Manufacturer (OEM) using Alexa Voice Service (AVS).</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "RejectSkill":{
       "name":"RejectSkill",
@@ -890,7 +1021,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Disassociates a skill from the organization under a user's AWS account. If the skill is a private skill, it moves to an AcceptStatus of PENDING. Any private or public skill that is rejected can be added later by calling the ApproveSkill API. </p>"
+      "documentation":"<p>Disassociates a skill from the organization under a user's AWS account. If the skill is a private skill, it moves to an AcceptStatus of PENDING. Any private or public skill that is rejected can be added later by calling the ApproveSkill API. </p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "ResolveRoom":{
       "name":"ResolveRoom",
@@ -903,7 +1036,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Determines the details for the room from which a skill request was invoked. This operation is used by skill developers.</p>"
+      "documentation":"<p>Determines the details for the room from which a skill request was invoked. This operation is used by skill developers.</p> <p>To query ResolveRoom from an Alexa skill, the skill ID needs to be authorized. When the skill is using an AWS Lambda function, the skill is automatically authorized when you publish your skill as a private skill to your AWS account. Skills that are hosted using a custom web service must be manually authorized. To get your skill authorized, contact AWS Support with your AWS account ID that queries the ResolveRoom API and skill ID. </p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "RevokeInvitation":{
       "name":"RevokeInvitation",
@@ -917,7 +1052,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Revokes an invitation and invalidates the enrollment URL.</p>"
+      "documentation":"<p>Revokes an invitation and invalidates the enrollment URL.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchAddressBooks":{
       "name":"SearchAddressBooks",
@@ -927,7 +1064,9 @@
       },
       "input":{"shape":"SearchAddressBooksRequest"},
       "output":{"shape":"SearchAddressBooksResponse"},
-      "documentation":"<p>Searches address books and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches address books and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchContacts":{
       "name":"SearchContacts",
@@ -937,7 +1076,9 @@
       },
       "input":{"shape":"SearchContactsRequest"},
       "output":{"shape":"SearchContactsResponse"},
-      "documentation":"<p>Searches contacts and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches contacts and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchDevices":{
       "name":"SearchDevices",
@@ -947,7 +1088,9 @@
       },
       "input":{"shape":"SearchDevicesRequest"},
       "output":{"shape":"SearchDevicesResponse"},
-      "documentation":"<p>Searches devices and lists the ones that meet a set of filter criteria.</p>"
+      "documentation":"<p>Searches devices and lists the ones that meet a set of filter criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchNetworkProfiles":{
       "name":"SearchNetworkProfiles",
@@ -957,7 +1100,9 @@
       },
       "input":{"shape":"SearchNetworkProfilesRequest"},
       "output":{"shape":"SearchNetworkProfilesResponse"},
-      "documentation":"<p>Searches network profiles and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches network profiles and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchProfiles":{
       "name":"SearchProfiles",
@@ -967,7 +1112,9 @@
       },
       "input":{"shape":"SearchProfilesRequest"},
       "output":{"shape":"SearchProfilesResponse"},
-      "documentation":"<p>Searches room profiles and lists the ones that meet a set of filter criteria.</p>"
+      "documentation":"<p>Searches room profiles and lists the ones that meet a set of filter criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchRooms":{
       "name":"SearchRooms",
@@ -977,7 +1124,9 @@
       },
       "input":{"shape":"SearchRoomsRequest"},
       "output":{"shape":"SearchRoomsResponse"},
-      "documentation":"<p>Searches rooms and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches rooms and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchSkillGroups":{
       "name":"SearchSkillGroups",
@@ -987,7 +1136,9 @@
       },
       "input":{"shape":"SearchSkillGroupsRequest"},
       "output":{"shape":"SearchSkillGroupsResponse"},
-      "documentation":"<p>Searches skill groups and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches skill groups and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SearchUsers":{
       "name":"SearchUsers",
@@ -997,7 +1148,9 @@
       },
       "input":{"shape":"SearchUsersRequest"},
       "output":{"shape":"SearchUsersResponse"},
-      "documentation":"<p>Searches users and lists the ones that meet a set of filter and sort criteria.</p>"
+      "documentation":"<p>Searches users and lists the ones that meet a set of filter and sort criteria.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "SendAnnouncement":{
       "name":"SendAnnouncement",
@@ -1026,7 +1179,9 @@
         {"shape":"InvalidUserStatusException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Sends an enrollment invitation email with a URL to a user. The URL is valid for 72 hours or until you call this operation again, whichever comes first. </p>"
+      "documentation":"<p>Sends an enrollment invitation email with a URL to a user. The URL is valid for 30 days or until you call this operation again, whichever comes first. </p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "StartDeviceSync":{
       "name":"StartDeviceSync",
@@ -1039,7 +1194,9 @@
       "errors":[
         {"shape":"DeviceNotRegisteredException"}
       ],
-      "documentation":"<p>Resets a device and its account to the known default settings. This clears all information and settings set by previous users in the following ways:</p> <ul> <li> <p>Bluetooth - This unpairs all bluetooth devices paired with your echo device.</p> </li> <li> <p>Volume - This resets the echo device's volume to the default value.</p> </li> <li> <p>Notifications - This clears all notifications from your echo device.</p> </li> <li> <p>Lists - This clears all to-do items from your echo device.</p> </li> <li> <p>Settings - This internally syncs the room's profile (if the device is assigned to a room), contacts, address books, delegation access for account linking, and communications (if enabled on the room profile).</p> </li> </ul>"
+      "documentation":"<p>Resets a device and its account to the known default settings. This clears all information and settings set by previous users in the following ways:</p> <ul> <li> <p>Bluetooth - This unpairs all bluetooth devices paired with your echo device.</p> </li> <li> <p>Volume - This resets the echo device's volume to the default value.</p> </li> <li> <p>Notifications - This clears all notifications from your echo device.</p> </li> <li> <p>Lists - This clears all to-do items from your echo device.</p> </li> <li> <p>Settings - This internally syncs the room's profile (if the device is assigned to a room), contacts, address books, delegation access for account linking, and communications (if enabled on the room profile).</p> </li> </ul>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "StartSmartHomeApplianceDiscovery":{
       "name":"StartSmartHomeApplianceDiscovery",
@@ -1052,7 +1209,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Initiates the discovery of any smart home appliances associated with the room.</p>"
+      "documentation":"<p>Initiates the discovery of any smart home appliances associated with the room.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "TagResource":{
       "name":"TagResource",
@@ -1065,7 +1224,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Adds metadata tags to a specified resource.</p>"
+      "documentation":"<p>Adds metadata tags to a specified resource.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UntagResource":{
       "name":"UntagResource",
@@ -1078,7 +1239,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Removes metadata tags from a specified resource.</p>"
+      "documentation":"<p>Removes metadata tags from a specified resource.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateAddressBook":{
       "name":"UpdateAddressBook",
@@ -1093,7 +1256,9 @@
         {"shape":"NameInUseException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates address book details by the address book ARN.</p>"
+      "documentation":"<p>Updates address book details by the address book ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateBusinessReportSchedule":{
       "name":"UpdateBusinessReportSchedule",
@@ -1107,7 +1272,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates the configuration of the report delivery schedule with the specified schedule ARN.</p>"
+      "documentation":"<p>Updates the configuration of the report delivery schedule with the specified schedule ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateConferenceProvider":{
       "name":"UpdateConferenceProvider",
@@ -1120,7 +1287,9 @@
       "errors":[
         {"shape":"NotFoundException"}
       ],
-      "documentation":"<p>Updates an existing conference provider's settings.</p>"
+      "documentation":"<p>Updates an existing conference provider's settings.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateContact":{
       "name":"UpdateContact",
@@ -1134,7 +1303,9 @@
         {"shape":"NotFoundException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates the contact details by the contact ARN.</p>"
+      "documentation":"<p>Updates the contact details by the contact ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateDevice":{
       "name":"UpdateDevice",
@@ -1149,7 +1320,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"DeviceNotRegisteredException"}
       ],
-      "documentation":"<p>Updates the device name by device ARN.</p>"
+      "documentation":"<p>Updates the device name by device ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateGateway":{
       "name":"UpdateGateway",
@@ -1163,7 +1336,9 @@
         {"shape":"NotFoundException"},
         {"shape":"NameInUseException"}
       ],
-      "documentation":"<p>Updates the details of a gateway. If any optional field is not provided, the existing corresponding value is left unmodified.</p>"
+      "documentation":"<p>Updates the details of a gateway. If any optional field is not provided, the existing corresponding value is left unmodified.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateGatewayGroup":{
       "name":"UpdateGatewayGroup",
@@ -1177,7 +1352,9 @@
         {"shape":"NotFoundException"},
         {"shape":"NameInUseException"}
       ],
-      "documentation":"<p>Updates the details of a gateway group. If any optional field is not provided, the existing corresponding value is left unmodified.</p>"
+      "documentation":"<p>Updates the details of a gateway group. If any optional field is not provided, the existing corresponding value is left unmodified.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateNetworkProfile":{
       "name":"UpdateNetworkProfile",
@@ -1194,7 +1371,9 @@
         {"shape":"InvalidCertificateAuthorityException"},
         {"shape":"InvalidSecretsManagerResourceException"}
       ],
-      "documentation":"<p>Updates a network profile by the network profile ARN.</p>"
+      "documentation":"<p>Updates a network profile by the network profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateProfile":{
       "name":"UpdateProfile",
@@ -1209,7 +1388,9 @@
         {"shape":"NameInUseException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates an existing room profile by room profile ARN.</p>"
+      "documentation":"<p>Updates an existing room profile by room profile ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateRoom":{
       "name":"UpdateRoom",
@@ -1223,7 +1404,9 @@
         {"shape":"NotFoundException"},
         {"shape":"NameInUseException"}
       ],
-      "documentation":"<p>Updates room details by room ARN.</p>"
+      "documentation":"<p>Updates room details by room ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     },
     "UpdateSkillGroup":{
       "name":"UpdateSkillGroup",
@@ -1238,7 +1421,9 @@
         {"shape":"NameInUseException"},
         {"shape":"ConcurrentModificationException"}
       ],
-      "documentation":"<p>Updates skill group details by skill group ARN.</p>"
+      "documentation":"<p>Updates skill group details by skill group ARN.</p>",
+      "deprecated":true,
+      "deprecatedMessage":"Alexa For Business is no longer supported"
     }
   },
   "shapes":{
@@ -1516,6 +1701,7 @@
     },
     "BusinessReportContentRange":{
       "type":"structure",
+      "required":["Interval"],
       "members":{
         "Interval":{
           "shape":"BusinessReportInterval",
@@ -1545,7 +1731,8 @@
       "type":"string",
       "enum":[
         "ONE_DAY",
-        "ONE_WEEK"
+        "ONE_WEEK",
+        "THIRTY_DAYS"
       ]
     },
     "BusinessReportRecurrence":{
@@ -1752,6 +1939,7 @@
         "OFFLINE"
       ]
     },
+    "ConnectionStatusUpdatedTime":{"type":"timestamp"},
     "Contact":{
       "type":"structure",
       "members":{
@@ -1772,8 +1960,16 @@
           "documentation":"<p>The last name of the contact, used to call the contact on the device.</p>"
         },
         "PhoneNumber":{
-          "shape":"E164PhoneNumber",
-          "documentation":"<p>The phone number of the contact.</p>"
+          "shape":"RawPhoneNumber",
+          "documentation":"<p>The phone number of the contact. The phone number type defaults to WORK. You can either specify PhoneNumber or PhoneNumbers. We recommend that you use PhoneNumbers, which lets you specify the phone number type and multiple numbers.</p>"
+        },
+        "PhoneNumbers":{
+          "shape":"PhoneNumberList",
+          "documentation":"<p>The list of phone numbers for the contact.</p>"
+        },
+        "SipAddresses":{
+          "shape":"SipAddressList",
+          "documentation":"<p>The list of SIP addresses for the contact.</p>"
         }
       },
       "documentation":"<p>A contact with attributes.</p>"
@@ -1798,8 +1994,16 @@
           "documentation":"<p>The last name of the contact, used to call the contact on the device.</p>"
         },
         "PhoneNumber":{
-          "shape":"E164PhoneNumber",
-          "documentation":"<p>The phone number of the contact.</p>"
+          "shape":"RawPhoneNumber",
+          "documentation":"<p>The phone number of the contact. The phone number type defaults to WORK. You can specify PhoneNumber or PhoneNumbers. We recommend that you use PhoneNumbers, which lets you specify the phone number type and multiple numbers.</p>"
+        },
+        "PhoneNumbers":{
+          "shape":"PhoneNumberList",
+          "documentation":"<p>The list of phone numbers for the contact.</p>"
+        },
+        "SipAddresses":{
+          "shape":"SipAddressList",
+          "documentation":"<p>The list of SIP addresses for the contact.</p>"
         }
       },
       "documentation":"<p>Information related to a contact.</p>"
@@ -1852,6 +2056,10 @@
           "shape":"ClientRequestToken",
           "documentation":"<p>A unique, user-specified identifier for the request that ensures idempotency.</p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags.</p>"
         }
       }
     },
@@ -1899,6 +2107,10 @@
           "shape":"ClientRequestToken",
           "documentation":"<p>The client request token.</p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags for the business report schedule.</p>"
         }
       }
     },
@@ -1943,6 +2155,10 @@
           "shape":"ClientRequestToken",
           "documentation":"<p>The request token of the client.</p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags.</p>"
         }
       }
     },
@@ -1972,13 +2188,25 @@
           "documentation":"<p>The last name of the contact that is used to call the contact on the device.</p>"
         },
         "PhoneNumber":{
-          "shape":"E164PhoneNumber",
-          "documentation":"<p>The phone number of the contact in E.164 format.</p>"
+          "shape":"RawPhoneNumber",
+          "documentation":"<p>The phone number of the contact in E.164 format. The phone number type defaults to WORK. You can specify PhoneNumber or PhoneNumbers. We recommend that you use PhoneNumbers, which lets you specify the phone number type and multiple numbers.</p>"
+        },
+        "PhoneNumbers":{
+          "shape":"PhoneNumberList",
+          "documentation":"<p>The list of phone numbers for the contact.</p>"
+        },
+        "SipAddresses":{
+          "shape":"SipAddressList",
+          "documentation":"<p>The list of SIP addresses for the contact.</p>"
         },
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "documentation":"<p>A unique, user-specified identifier for this request that ensures idempotency.</p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags.</p>"
         }
       }
     },
@@ -1990,6 +2218,29 @@
           "documentation":"<p>The ARN of the newly created address book.</p>"
         }
       }
+    },
+    "CreateEndOfMeetingReminder":{
+      "type":"structure",
+      "required":[
+        "ReminderAtMinutes",
+        "ReminderType",
+        "Enabled"
+      ],
+      "members":{
+        "ReminderAtMinutes":{
+          "shape":"EndOfMeetingReminderMinutesList",
+          "documentation":"<p> A range of 3 to 15 minutes that determines when the reminder begins.</p>"
+        },
+        "ReminderType":{
+          "shape":"EndOfMeetingReminderType",
+          "documentation":"<p>The type of sound that users hear during the end of meeting reminder. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether an end of meeting reminder is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Creates settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending.</p>"
     },
     "CreateGatewayGroupRequest":{
       "type":"structure",
@@ -2010,6 +2261,10 @@
           "shape":"ClientRequestToken",
           "documentation":"<p> A unique, user-specified identifier for the request that ensures idempotency.</p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags.</p>"
         }
       }
     },
@@ -2021,6 +2276,44 @@
           "documentation":"<p>The ARN of the created gateway group.</p>"
         }
       }
+    },
+    "CreateInstantBooking":{
+      "type":"structure",
+      "required":[
+        "DurationInMinutes",
+        "Enabled"
+      ],
+      "members":{
+        "DurationInMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 15 and 240 minutes at increments of 15 that determines how long to book an available room when a meeting is started with Alexa.</p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether instant booking is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Creates settings for the instant booking feature that are applied to a room profile. When users start their meeting with Alexa, Alexa automatically books the room for the configured duration if the room is available.</p>"
+    },
+    "CreateMeetingRoomConfiguration":{
+      "type":"structure",
+      "members":{
+        "RoomUtilizationMetricsEnabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether room utilization metrics are enabled or not.</p>"
+        },
+        "EndOfMeetingReminder":{"shape":"CreateEndOfMeetingReminder"},
+        "InstantBooking":{
+          "shape":"CreateInstantBooking",
+          "documentation":"<p>Settings to automatically book a room for a configured duration if it's free when joining a meeting with Alexa.</p>"
+        },
+        "RequireCheckIn":{
+          "shape":"CreateRequireCheckIn",
+          "documentation":"<p>Settings for requiring a check in when a room is reserved. Alexa can cancel a room reservation if it's not checked into to make the room available for others. Users can check in by joining the meeting with Alexa or an AVS device, or by saying “Alexa, check in.”</p>"
+        },
+        "ProactiveJoin":{"shape":"CreateProactiveJoin"}
+      },
+      "documentation":"<p>Creates meeting room settings of a room profile.</p>"
     },
     "CreateNetworkProfileRequest":{
       "type":"structure",
@@ -2070,6 +2363,10 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags. </p>"
         }
       }
     },
@@ -2080,6 +2377,13 @@
           "shape":"Arn",
           "documentation":"<p>The ARN of the network profile associated with a device.</p>"
         }
+      }
+    },
+    "CreateProactiveJoin":{
+      "type":"structure",
+      "required":["EnabledByMotion"],
+      "members":{
+        "EnabledByMotion":{"shape":"Boolean"}
       }
     },
     "CreateProfileRequest":{
@@ -2117,6 +2421,10 @@
           "shape":"WakeWord",
           "documentation":"<p>A wake word for Alexa, Echo, Amazon, or a computer.</p>"
         },
+        "Locale":{
+          "shape":"DeviceLocale",
+          "documentation":"<p>The locale of the room profile. (This is currently only available to a limited preview audience.)</p>"
+        },
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "documentation":"<p>The user-specified token that is used during the creation of a profile.</p>",
@@ -2133,6 +2441,18 @@
         "PSTNEnabled":{
           "shape":"Boolean",
           "documentation":"<p>Whether PSTN calling is enabled.</p>"
+        },
+        "DataRetentionOptIn":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether data retention of the profile is enabled.</p>"
+        },
+        "MeetingRoomConfiguration":{
+          "shape":"CreateMeetingRoomConfiguration",
+          "documentation":"<p>The meeting room settings of a room profile.</p>"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags for the profile.</p>"
         }
       }
     },
@@ -2144,6 +2464,24 @@
           "documentation":"<p>The ARN of the newly created room profile in the response.</p>"
         }
       }
+    },
+    "CreateRequireCheckIn":{
+      "type":"structure",
+      "required":[
+        "ReleaseAfterMinutes",
+        "Enabled"
+      ],
+      "members":{
+        "ReleaseAfterMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 5 and 20 minutes to determine when to release the room if it's not checked into.</p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether require check in is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Creates settings for the require check in feature that are applied to a room profile. Require check in allows a meeting room’s Alexa or AVS device to prompt the user to check in; otherwise, the room will be released.</p>"
     },
     "CreateRoomRequest":{
       "type":"structure",
@@ -2159,7 +2497,7 @@
         },
         "ProfileArn":{
           "shape":"Arn",
-          "documentation":"<p>The profile ARN for the room.</p>"
+          "documentation":"<p>The profile ARN for the room. This is required.</p>"
         },
         "ProviderCalendarId":{
           "shape":"ProviderCalendarId",
@@ -2201,6 +2539,10 @@
           "shape":"ClientRequestToken",
           "documentation":"<p>A unique, user-specified identifier for this request that ensures idempotency. </p>",
           "idempotencyToken":true
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags for the skill group.</p>"
         }
       }
     },
@@ -2614,16 +2956,21 @@
           "documentation":"<p>The room ARN associated with a device.</p>"
         },
         "RoomName":{
-          "shape":"RoomName",
+          "shape":"DeviceRoomName",
           "documentation":"<p>The name of the room associated with a device.</p>"
         },
         "DeviceStatusInfo":{
           "shape":"DeviceStatusInfo",
           "documentation":"<p>Detailed information about a device's status.</p>"
+        },
+        "CreatedTime":{
+          "shape":"DeviceDataCreatedTime",
+          "documentation":"<p>The time (in epoch) when the device data was created.</p>"
         }
       },
       "documentation":"<p>Device attributes.</p>"
     },
+    "DeviceDataCreatedTime":{"type":"timestamp"},
     "DeviceDataList":{
       "type":"list",
       "member":{"shape":"DeviceData"}
@@ -2659,6 +3006,11 @@
       ]
     },
     "DeviceEventValue":{"type":"string"},
+    "DeviceLocale":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "DeviceName":{
       "type":"string",
       "max":100,
@@ -2690,6 +3042,12 @@
       },
       "documentation":"<p>The request failed because this device is no longer registered and therefore no longer managed by this account.</p>",
       "exception":true
+    },
+    "DeviceRoomName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u0085\\u00A0-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]*"
     },
     "DeviceSerialNumber":{
       "type":"string",
@@ -2740,7 +3098,9 @@
         "INVALID_CERTIFICATE_AUTHORITY",
         "NETWORK_PROFILE_NOT_FOUND",
         "INVALID_PASSWORD_STATE",
-        "PASSWORD_NOT_FOUND"
+        "PASSWORD_NOT_FOUND",
+        "PASSWORD_MANAGER_ACCESS_DENIED",
+        "CERTIFICATE_AUTHORITY_ACCESS_DENIED"
       ]
     },
     "DeviceStatusDetails":{
@@ -2757,6 +3117,10 @@
         "ConnectionStatus":{
           "shape":"ConnectionStatus",
           "documentation":"<p>The latest available information about the connection status of a device. </p>"
+        },
+        "ConnectionStatusUpdatedTime":{
+          "shape":"ConnectionStatusUpdatedTime",
+          "documentation":"<p>The time (in epoch) when the device connection status changed.</p>"
         }
       },
       "documentation":"<p>Detailed information about a device's status.</p>"
@@ -2864,16 +3228,11 @@
         "IMPERIAL"
       ]
     },
-    "E164PhoneNumber":{
-      "type":"string",
-      "pattern":"^\\+\\d{8,}$",
-      "sensitive":true
-    },
     "Email":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"([0-9a-zA-Z]([+-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})"
+      "pattern":"\\w[+-.\\w]*@\\w[\\w\\.\\-]+\\.[0-9a-zA-Z]{2,24}"
     },
     "EnablementType":{
       "type":"string",
@@ -2887,6 +3246,39 @@
       "enum":[
         "ENABLED",
         "PENDING"
+      ]
+    },
+    "EndOfMeetingReminder":{
+      "type":"structure",
+      "members":{
+        "ReminderAtMinutes":{
+          "shape":"EndOfMeetingReminderMinutesList",
+          "documentation":"<p>A range of 3 to 15 minutes that determines when the reminder begins.</p>"
+        },
+        "ReminderType":{
+          "shape":"EndOfMeetingReminderType",
+          "documentation":"<p>The type of sound that users hear during the end of meeting reminder. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether an end of meeting reminder is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending. </p>"
+    },
+    "EndOfMeetingReminderMinutesList":{
+      "type":"list",
+      "member":{"shape":"Minutes"},
+      "max":1,
+      "min":1
+    },
+    "EndOfMeetingReminderType":{
+      "type":"string",
+      "enum":[
+        "ANNOUNCEMENT_TIME_CHECK",
+        "ANNOUNCEMENT_VARIABLE_TIME_LEFT",
+        "CHIME",
+        "KNOCK"
       ]
     },
     "EndUserLicenseAgreement":{"type":"string"},
@@ -3378,6 +3770,20 @@
       "documentation":"<p>The IP endpoint and protocol for calling.</p>"
     },
     "IconUrl":{"type":"string"},
+    "InstantBooking":{
+      "type":"structure",
+      "members":{
+        "DurationInMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 15 and 240 minutes at increments of 15 that determines how long to book an available room when a meeting is started with Alexa. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether instant booking is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the instant booking feature that are applied to a room profile. When users start their meeting with Alexa, Alexa automatically books the room for the configured duration if the room is available.</p>"
+    },
     "InvalidCertificateAuthorityException":{
       "type":"structure",
       "members":{
@@ -3579,11 +3985,11 @@
       "members":{
         "SkillGroupArn":{
           "shape":"Arn",
-          "documentation":"<p>The ARN of the skill group for which to list enabled skills. Required.</p>"
+          "documentation":"<p>The ARN of the skill group for which to list enabled skills.</p>"
         },
         "EnablementType":{
           "shape":"EnablementTypeFilter",
-          "documentation":"<p>Whether the skill is enabled under the user's account, or if it requires linking to be used.</p>"
+          "documentation":"<p>Whether the skill is enabled under the user's account.</p>"
         },
         "SkillType":{
           "shape":"SkillTypeFilter",
@@ -3591,11 +3997,11 @@
         },
         "NextToken":{
           "shape":"NextToken",
-          "documentation":"<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by <code>MaxResults</code>. Required.</p>"
+          "documentation":"<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by <code>MaxResults</code>.</p>"
         },
         "MaxResults":{
           "shape":"SkillListMaxResults",
-          "documentation":"<p>The maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved. Required.</p>"
+          "documentation":"<p>The maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>"
         }
       }
     },
@@ -3742,6 +4148,29 @@
       "min":1
     },
     "MaxVolumeLimit":{"type":"integer"},
+    "MeetingRoomConfiguration":{
+      "type":"structure",
+      "members":{
+        "RoomUtilizationMetricsEnabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether room utilization metrics are enabled or not.</p>"
+        },
+        "EndOfMeetingReminder":{
+          "shape":"EndOfMeetingReminder",
+          "documentation":"<p>Settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending. </p>"
+        },
+        "InstantBooking":{
+          "shape":"InstantBooking",
+          "documentation":"<p>Settings to automatically book the room if available for a configured duration when joining a meeting with Alexa. </p>"
+        },
+        "RequireCheckIn":{
+          "shape":"RequireCheckIn",
+          "documentation":"<p>Settings for requiring a check in when a room is reserved. Alexa can cancel a room reservation if it's not checked into. This makes the room available for others. Users can check in by joining the meeting with Alexa or an AVS device, or by saying “Alexa, check in.” </p>"
+        },
+        "ProactiveJoin":{"shape":"ProactiveJoin"}
+      },
+      "documentation":"<p>Meeting room settings of a room profile.</p>"
+    },
     "MeetingSetting":{
       "type":"structure",
       "required":["RequirePin"],
@@ -3753,6 +4182,7 @@
       },
       "documentation":"<p>The values that indicate whether a pin is always required (YES), never required (NO), or OPTIONAL.</p> <ul> <li> <p>If YES, Alexa will always ask for a meeting pin.</p> </li> <li> <p>If NO, Alexa will never ask for a meeting pin.</p> </li> <li> <p>If OPTIONAL, Alexa will ask if you have a meeting pin and if the customer responds with yes, it will ask for the meeting pin.</p> </li> </ul>"
     },
+    "Minutes":{"type":"integer"},
     "NameInUseException":{
       "type":"structure",
       "members":{
@@ -3949,7 +4379,46 @@
       },
       "documentation":"<p>The information for public switched telephone network (PSTN) conferencing.</p>"
     },
+    "PhoneNumber":{
+      "type":"structure",
+      "required":[
+        "Number",
+        "Type"
+      ],
+      "members":{
+        "Number":{
+          "shape":"RawPhoneNumber",
+          "documentation":"<p>The raw value of the phone number.</p>"
+        },
+        "Type":{
+          "shape":"PhoneNumberType",
+          "documentation":"<p>The type of the phone number.</p>"
+        }
+      },
+      "documentation":"<p>The phone number for the contact containing the raw number and phone number type.</p>"
+    },
+    "PhoneNumberList":{
+      "type":"list",
+      "member":{"shape":"PhoneNumber"},
+      "max":3,
+      "min":0
+    },
+    "PhoneNumberType":{
+      "type":"string",
+      "enum":[
+        "MOBILE",
+        "WORK",
+        "HOME"
+      ],
+      "sensitive":true
+    },
     "PrivacyPolicy":{"type":"string"},
+    "ProactiveJoin":{
+      "type":"structure",
+      "members":{
+        "EnabledByMotion":{"shape":"Boolean"}
+      }
+    },
     "ProductDescription":{"type":"string"},
     "ProductId":{
       "type":"string",
@@ -3990,6 +4459,10 @@
           "shape":"WakeWord",
           "documentation":"<p>The wake word of a room profile.</p>"
         },
+        "Locale":{
+          "shape":"DeviceLocale",
+          "documentation":"<p>The locale of a room profile. (This is currently available only to a limited preview audience.)</p>"
+        },
         "SetupModeDisabled":{
           "shape":"Boolean",
           "documentation":"<p>The setup mode of a room profile.</p>"
@@ -4002,9 +4475,17 @@
           "shape":"Boolean",
           "documentation":"<p>The PSTN setting of a room profile.</p>"
         },
+        "DataRetentionOptIn":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether data retention of the profile is enabled.</p>"
+        },
         "AddressBookArn":{
           "shape":"Arn",
           "documentation":"<p>The ARN of the address book.</p>"
+        },
+        "MeetingRoomConfiguration":{
+          "shape":"MeetingRoomConfiguration",
+          "documentation":"<p>Meeting room settings of a room profile.</p>"
         }
       },
       "documentation":"<p>A room profile with attributes.</p>"
@@ -4030,7 +4511,7 @@
         },
         "Timezone":{
           "shape":"Timezone",
-          "documentation":"<p>The timezone of a room profile.</p>"
+          "documentation":"<p>The time zone of a room profile.</p>"
         },
         "DistanceUnit":{
           "shape":"DistanceUnit",
@@ -4043,6 +4524,10 @@
         "WakeWord":{
           "shape":"WakeWord",
           "documentation":"<p>The wake word of a room profile.</p>"
+        },
+        "Locale":{
+          "shape":"DeviceLocale",
+          "documentation":"<p>The locale of a room profile. (This is currently available only to a limited preview audience.)</p>"
         }
       },
       "documentation":"<p>The data of a room profile.</p>"
@@ -4152,13 +4637,19 @@
       "members":{
       }
     },
+    "RawPhoneNumber":{
+      "type":"string",
+      "max":50,
+      "min":0,
+      "pattern":"^[\\+0-9\\#\\,\\(][\\+0-9\\-\\.\\/\\(\\)\\,\\#\\s]+$",
+      "sensitive":true
+    },
     "RegisterAVSDeviceRequest":{
       "type":"structure",
       "required":[
         "ClientId",
         "UserCode",
         "ProductId",
-        "DeviceSerialNumber",
         "AmazonId"
       ],
       "members":{
@@ -4181,6 +4672,14 @@
         "AmazonId":{
           "shape":"AmazonId",
           "documentation":"<p>The device type ID for your AVS device generated by Amazon when the OEM creates a new product on Amazon's Developer Console.</p>"
+        },
+        "RoomArn":{
+          "shape":"Arn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the room with which to associate your AVS device.</p>"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags to be added to the specified resource. Do not provide system tags.</p>"
         }
       }
     },
@@ -4209,6 +4708,20 @@
       }
     },
     "ReleaseDate":{"type":"string"},
+    "RequireCheckIn":{
+      "type":"structure",
+      "members":{
+        "ReleaseAfterMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 5 and 20 minutes to determine when to release the room if it's not checked into. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether require check in is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the require check in feature that are applied to a room profile. Require check in allows a meeting room’s Alexa or AVS device to prompt the user to check in; otherwise, the room will be released. </p>"
+    },
     "RequirePin":{
       "type":"string",
       "enum":[
@@ -4768,6 +5281,42 @@
       "max":3,
       "min":0
     },
+    "SipAddress":{
+      "type":"structure",
+      "required":[
+        "Uri",
+        "Type"
+      ],
+      "members":{
+        "Uri":{
+          "shape":"SipUri",
+          "documentation":"<p>The URI for the SIP address.</p>"
+        },
+        "Type":{
+          "shape":"SipType",
+          "documentation":"<p>The type of the SIP address.</p>"
+        }
+      },
+      "documentation":"<p>The SIP address for the contact containing the URI and SIP address type.</p>"
+    },
+    "SipAddressList":{
+      "type":"list",
+      "member":{"shape":"SipAddress"},
+      "max":1,
+      "min":0
+    },
+    "SipType":{
+      "type":"string",
+      "enum":["WORK"],
+      "sensitive":true
+    },
+    "SipUri":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^sip[s]?:([^@:]+)\\@([^@]+)$",
+      "sensitive":true
+    },
     "SkillDetails":{
       "type":"structure",
       "members":{
@@ -4805,7 +5354,7 @@
         },
         "Reviews":{
           "shape":"Reviews",
-          "documentation":"<p>The list of reviews for the skill, including Key and Value pair.</p>"
+          "documentation":"<p> <i>This member has been deprecated.</i> </p> <p>The list of reviews for the skill, including Key and Value pair.</p>"
         },
         "DeveloperInfo":{
           "shape":"DeveloperInfo",
@@ -5118,7 +5667,7 @@
         },
         "Value":{
           "shape":"TagValue",
-          "documentation":"<p>The value of a tag. Tag values are case-sensitive and can be null.</p>"
+          "documentation":"<p>The value of a tag. Tag values are case sensitive and can be null.</p>"
         }
       },
       "documentation":"<p>A key-value pair that can be associated with a resource. </p>"
@@ -5366,8 +5915,16 @@
           "documentation":"<p>The updated last name of the contact.</p>"
         },
         "PhoneNumber":{
-          "shape":"E164PhoneNumber",
-          "documentation":"<p>The updated phone number of the contact.</p>"
+          "shape":"RawPhoneNumber",
+          "documentation":"<p>The updated phone number of the contact. The phone number type defaults to WORK. You can either specify PhoneNumber or PhoneNumbers. We recommend that you use PhoneNumbers, which lets you specify the phone number type and multiple numbers.</p>"
+        },
+        "PhoneNumbers":{
+          "shape":"PhoneNumberList",
+          "documentation":"<p>The list of phone numbers for the contact.</p>"
+        },
+        "SipAddresses":{
+          "shape":"SipAddressList",
+          "documentation":"<p>The list of SIP addresses for the contact.</p>"
         }
       }
     },
@@ -5393,6 +5950,24 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UpdateEndOfMeetingReminder":{
+      "type":"structure",
+      "members":{
+        "ReminderAtMinutes":{
+          "shape":"EndOfMeetingReminderMinutesList",
+          "documentation":"<p>Updates settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending. </p>"
+        },
+        "ReminderType":{
+          "shape":"EndOfMeetingReminderType",
+          "documentation":"<p>The type of sound that users hear during the end of meeting reminder. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether an end of meeting reminder is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending. </p>"
     },
     "UpdateGatewayGroupRequest":{
       "type":"structure",
@@ -5444,6 +6019,43 @@
       "members":{
       }
     },
+    "UpdateInstantBooking":{
+      "type":"structure",
+      "members":{
+        "DurationInMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 15 and 240 minutes at increments of 15 that determines how long to book an available room when a meeting is started with Alexa.</p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether instant booking is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Updates settings for the instant booking feature that are applied to a room profile. If instant booking is enabled, Alexa automatically reserves a room if it is free when a user joins a meeting with Alexa.</p>"
+    },
+    "UpdateMeetingRoomConfiguration":{
+      "type":"structure",
+      "members":{
+        "RoomUtilizationMetricsEnabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether room utilization metrics are enabled or not.</p>"
+        },
+        "EndOfMeetingReminder":{
+          "shape":"UpdateEndOfMeetingReminder",
+          "documentation":"<p>Settings for the end of meeting reminder feature that are applied to a room profile. The end of meeting reminder enables Alexa to remind users when a meeting is ending. </p>"
+        },
+        "InstantBooking":{
+          "shape":"UpdateInstantBooking",
+          "documentation":"<p>Settings to automatically book an available room available for a configured duration when joining a meeting with Alexa.</p>"
+        },
+        "RequireCheckIn":{
+          "shape":"UpdateRequireCheckIn",
+          "documentation":"<p>Settings for requiring a check in when a room is reserved. Alexa can cancel a room reservation if it's not checked into to make the room available for others. Users can check in by joining the meeting with Alexa or an AVS device, or by saying “Alexa, check in.” </p>"
+        },
+        "ProactiveJoin":{"shape":"UpdateProactiveJoin"}
+      },
+      "documentation":"<p>Updates meeting room settings of a room profile.</p>"
+    },
     "UpdateNetworkProfileRequest":{
       "type":"structure",
       "required":["NetworkProfileArn"],
@@ -5483,6 +6095,13 @@
       "members":{
       }
     },
+    "UpdateProactiveJoin":{
+      "type":"structure",
+      "required":["EnabledByMotion"],
+      "members":{
+        "EnabledByMotion":{"shape":"Boolean"}
+      }
+    },
     "UpdateProfileRequest":{
       "type":"structure",
       "members":{
@@ -5518,6 +6137,10 @@
           "shape":"WakeWord",
           "documentation":"<p>The updated wake word for the room profile.</p>"
         },
+        "Locale":{
+          "shape":"DeviceLocale",
+          "documentation":"<p>The updated locale for the room profile. (This is currently only available to a limited preview audience.)</p>"
+        },
         "SetupModeDisabled":{
           "shape":"Boolean",
           "documentation":"<p>Whether the setup mode of the profile is enabled.</p>"
@@ -5529,6 +6152,14 @@
         "PSTNEnabled":{
           "shape":"Boolean",
           "documentation":"<p>Whether the PSTN setting of the room profile is enabled.</p>"
+        },
+        "DataRetentionOptIn":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether data retention of the profile is enabled.</p>"
+        },
+        "MeetingRoomConfiguration":{
+          "shape":"UpdateMeetingRoomConfiguration",
+          "documentation":"<p>The updated meeting room settings of a room profile.</p>"
         }
       }
     },
@@ -5536,6 +6167,20 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UpdateRequireCheckIn":{
+      "type":"structure",
+      "members":{
+        "ReleaseAfterMinutes":{
+          "shape":"Minutes",
+          "documentation":"<p>Duration between 5 and 20 minutes to determine when to release the room if it's not checked into. </p>"
+        },
+        "Enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Whether require check in is enabled or not.</p>"
+        }
+      },
+      "documentation":"<p>Updates settings for the require check in feature that are applied to a room profile. Require check in allows a meeting room’s Alexa or AVS device to prompt the user to check in; otherwise, the room will be released. </p>"
     },
     "UpdateRoomRequest":{
       "type":"structure",
@@ -5667,5 +6312,7 @@
       "pattern":"[a-zA-Z0-9@_+.-]*"
     }
   },
-  "documentation":"<p>Alexa for Business helps you use Alexa in your organization. Alexa for Business provides you with the tools to manage Alexa devices, enroll your users, and assign skills, at scale. You can build your own context-aware voice skills using the Alexa Skills Kit and the Alexa for Business API operations. You can also make these available as private skills for your organization. Alexa for Business makes it efficient to voice-enable your products and services, thus providing context-aware voice experiences for your customers. Device makers building with the Alexa Voice Service (AVS) can create fully integrated solutions, register their products with Alexa for Business, and manage them as shared devices in their organization. </p>"
+  "documentation":"<p>Alexa for Business has been retired and is no longer supported.</p>",
+  "deprecated":true,
+  "deprecatedMessage":"Alexa For Business is no longer supported"
 }

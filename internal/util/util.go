@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto"
 	"crypto/ecdsa"
+	"crypto/ed25519"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha1"
@@ -14,6 +15,7 @@ import (
 	"encoding/pem"
 	"io"
 	"os"
+	"reflect"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -77,8 +79,15 @@ func NewCA(privateKey crypto.PrivateKey, publicKey interface{}, passwordBytes ui
 	case *rsa.PrivateKey:
 		block.Type = "RSA PRIVATE KEY"
 		block.Bytes = x509.MarshalPKCS1PrivateKey(typed)
+	case ed25519.PrivateKey:
+		block.Type = "PRIVATE KEY"
+		bytes, err := x509.MarshalPKCS8PrivateKey(typed)
+		if err != nil {
+			return nil, errors.Wrap(err, "Could not x509 Marshal private key")
+		}
+		block.Bytes = bytes
 	default:
-		return nil, errors.New("Unrecognized private key type")
+		return nil, errors.New("Unrecognized private key type: " + reflect.TypeOf(privateKey).String())
 	}
 
 	password, err := GenerateRandomBytes(passwordBytes)

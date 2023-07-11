@@ -22,39 +22,63 @@ import os
 import platform
 import socket
 import warnings
-import collections
 
-from botocore import __version__
-from botocore import UNSIGNED
+import botocore.client
 import botocore.configloader
 import botocore.credentials
-import botocore.client
-from botocore.configprovider import ConfigValueStore
-from botocore.configprovider import ConfigChainFactory
-from botocore.configprovider import create_botocore_default_config_mapping
-from botocore.configprovider import BOTOCORE_DEFAUT_SESSION_VARIABLES
-from botocore.exceptions import ConfigNotFound, ProfileNotFound
-from botocore.exceptions import UnknownServiceError, PartialCredentialsError
+import botocore.tokens
+from botocore import (
+    UNSIGNED,
+    __version__,
+    handlers,
+    invoke_initializers,
+    monitoring,
+    paginate,
+    retryhandler,
+    translate,
+    waiter,
+)
+from botocore.compat import HAS_CRT, MutableMapping
+from botocore.configprovider import (
+    BOTOCORE_DEFAUT_SESSION_VARIABLES,
+    ConfigChainFactory,
+    ConfiguredEndpointProvider,
+    ConfigValueStore,
+    DefaultConfigResolver,
+    SmartDefaultsConfigStoreFactory,
+    create_botocore_default_config_mapping,
+)
 from botocore.errorfactory import ClientExceptionsFactory
-from botocore import handlers
-from botocore.hooks import HierarchicalEmitter, first_non_none_response
-from botocore.hooks import EventAliaser
+from botocore.exceptions import (
+    ConfigNotFound,
+    InvalidDefaultsMode,
+    PartialCredentialsError,
+    ProfileNotFound,
+    UnknownServiceError,
+)
+from botocore.hooks import (
+    EventAliaser,
+    HierarchicalEmitter,
+    first_non_none_response,
+)
 from botocore.loaders import create_loader
+from botocore.model import ServiceModel
 from botocore.parsers import ResponseParserFactory
 from botocore.regions import EndpointResolver
-from botocore.model import ServiceModel
-from botocore import monitoring
-from botocore import paginate
-from botocore import waiter
-from botocore import retryhandler, translate
-from botocore import utils
-from botocore.utils import EVENT_ALIASES
+from botocore.useragent import UserAgentString
+from botocore.utils import (
+    EVENT_ALIASES,
+    IMDSRegionProvider,
+    validate_region_name,
+)
+
+from botocore.compat import HAS_CRT  # noqa
 
 
 logger = logging.getLogger(__name__)
 
 
-class Session(object):
+class Session:
     """
     The Session object collects together useful functionality
     from `botocore` as well as important data such as configuration
@@ -70,8 +94,13 @@ class Session(object):
     #: The default format string to use when configuring the botocore logger.
     LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
-    def __init__(self, session_vars=None, event_hooks=None,
-                 include_builtin_handlers=True, profile=None):
+    def __init__(
+        self,
+        session_vars=None,
+        event_hooks=None,
+        include_builtin_handlers=True,
+        profile=None,
+    ):
         """
         Create a new Session object.
 
@@ -112,6 +141,7 @@ class Session(object):
         self._profile = None
         self._config = None
         self._credentials = None
+        self._auth_token = None
         self._profile_map = None
         # This is a dict that stores per session specific config variable
         # overrides via set_config_variable().
@@ -119,15 +149,18 @@ class Session(object):
         if profile is not None:
             self._session_instance_vars['profile'] = profile
         self._client_config = None
+        self._last_client_region_used = None
         self._components = ComponentLocator()
         self._internal_components = ComponentLocator()
         self._register_components()
         self.session_var_map = SessionVarDict(self, self.SESSION_VARIABLES)
         if session_vars is not None:
             self.session_var_map.update(session_vars)
+        invoke_initializers(self)
 
     def _register_components(self):
         self._register_credential_provider()
+        self._register_token_provider()
         self._register_data_loader()
         self._register_endpoint_resolver()
         self._register_event_emitter()
@@ -135,35 +168,81 @@ class Session(object):
         self._register_exceptions_factory()
         self._register_config_store()
         self._register_monitor()
+        self._register_default_config_resolver()
+        self._register_smart_defaults_factory()
+        self._register_user_agent_creator()
 
     def _register_event_emitter(self):
         self._components.register_component('event_emitter', self._events)
 
+    def _register_token_provider(self):
+        self._components.lazy_register_component(
+            'token_provider', self._create_token_resolver
+        )
+
+    def _create_token_resolver(self):
+        return botocore.tokens.create_token_resolver(self)
+
     def _register_credential_provider(self):
         self._components.lazy_register_component(
-            'credential_provider',
-            lambda:  botocore.credentials.create_credential_resolver(self))
+            'credential_provider', self._create_credential_resolver
+        )
+
+    def _create_credential_resolver(self):
+        return botocore.credentials.create_credential_resolver(
+            self, region_name=self._last_client_region_used
+        )
 
     def _register_data_loader(self):
         self._components.lazy_register_component(
             'data_loader',
-            lambda:  create_loader(self.get_config_variable('data_path')))
+            lambda: create_loader(self.get_config_variable('data_path')),
+        )
 
     def _register_endpoint_resolver(self):
         def create_default_resolver():
             loader = self.get_component('data_loader')
-            endpoints = loader.load_data('endpoints')
-            return EndpointResolver(endpoints)
+            endpoints, path = loader.load_data_with_path('endpoints')
+            uses_builtin = loader.is_builtin_path(path)
+            return EndpointResolver(endpoints, uses_builtin_data=uses_builtin)
+
         self._internal_components.lazy_register_component(
-            'endpoint_resolver', create_default_resolver)
+            'endpoint_resolver', create_default_resolver
+        )
+
+    def _register_default_config_resolver(self):
+        def create_default_config_resolver():
+            loader = self.get_component('data_loader')
+            defaults = loader.load_data('sdk-default-configuration')
+            return DefaultConfigResolver(defaults)
+
+        self._internal_components.lazy_register_component(
+            'default_config_resolver', create_default_config_resolver
+        )
+
+    def _register_smart_defaults_factory(self):
+        def create_smart_defaults_factory():
+            default_config_resolver = self._get_internal_component(
+                'default_config_resolver'
+            )
+            imds_region_provider = IMDSRegionProvider(session=self)
+            return SmartDefaultsConfigStoreFactory(
+                default_config_resolver, imds_region_provider
+            )
+
+        self._internal_components.lazy_register_component(
+            'smart_defaults_factory', create_smart_defaults_factory
+        )
 
     def _register_response_parser_factory(self):
-        self._components.register_component('response_parser_factory',
-                                            ResponseParserFactory())
+        self._components.register_component(
+            'response_parser_factory', ResponseParserFactory()
+        )
 
     def _register_exceptions_factory(self):
         self._internal_components.register_component(
-            'exceptions_factory', ClientExceptionsFactory())
+            'exceptions_factory', ClientExceptionsFactory()
+        )
 
     def _register_builtin_handlers(self, events):
         for spec in handlers.BUILTIN_HANDLERS:
@@ -178,33 +257,44 @@ class Session(object):
                     self._events.register_last(event_name, handler)
 
     def _register_config_store(self):
-        chain_builder = ConfigChainFactory(session=self)
         config_store_component = ConfigValueStore(
-            mapping=create_botocore_default_config_mapping(chain_builder)
+            mapping=create_botocore_default_config_mapping(self)
         )
-        self._components.register_component('config_store',
-                                            config_store_component)
+        self._components.register_component(
+            'config_store', config_store_component
+        )
 
     def _register_monitor(self):
         self._internal_components.lazy_register_component(
-            'monitor', self._create_csm_monitor)
+            'monitor', self._create_csm_monitor
+        )
+
+    def _register_user_agent_creator(self):
+        uas = UserAgentString.from_environment()
+        self._components.register_component('user_agent_creator', uas)
 
     def _create_csm_monitor(self):
         if self.get_config_variable('csm_enabled'):
             client_id = self.get_config_variable('csm_client_id')
+            host = self.get_config_variable('csm_host')
             port = self.get_config_variable('csm_port')
             handler = monitoring.Monitor(
                 adapter=monitoring.MonitorEventAdapter(),
                 publisher=monitoring.SocketPublisher(
                     socket=socket.socket(socket.AF_INET, socket.SOCK_DGRAM),
-                    host='127.0.0.1',
+                    host=host,
                     port=port,
                     serializer=monitoring.CSMSerializer(
-                        csm_client_id=client_id)
-                )
+                        csm_client_id=client_id
+                    ),
+                ),
             )
             return handler
         return None
+
+    def _get_crt_version(self):
+        user_agent_creator = self.get_component('user_agent_creator')
+        return user_agent_creator._crt_version or 'Unknown'
 
     @property
     def available_profiles(self):
@@ -228,9 +318,11 @@ class Session(object):
     def get_config_variable(self, logical_name, methods=None):
         if methods is not None:
             return self._get_config_variable_with_custom_methods(
-                logical_name, methods)
+                logical_name, methods
+            )
         return self.get_component('config_store').get_config_variable(
-            logical_name)
+            logical_name
+        )
 
     def _get_config_variable_with_custom_methods(self, logical_name, methods):
         # If a custom list of methods was supplied we need to perserve the
@@ -240,9 +332,7 @@ class Session(object):
         # and then thrown out. This is not efficient, nor is the methods arg
         # used in botocore, this is just for backwards compatibility.
         chain_builder = SubsetChainConfigFactory(session=self, methods=methods)
-        mapping = create_botocore_default_config_mapping(
-            chain_builder
-        )
+        mapping = create_botocore_default_config_mapping(self)
         for name, config_options in self.session_var_map.items():
             config_name, env_vars, default, typecast = config_options
             build_chain_config_args = {
@@ -258,9 +348,7 @@ class Session(object):
             mapping[name] = chain_builder.create_config_chain(
                 **build_chain_config_args
             )
-        config_store_component = ConfigValueStore(
-            mapping=mapping
-        )
+        config_store_component = ConfigValueStore(mapping=mapping)
         value = config_store_component.get_config_variable(logical_name)
         return value
 
@@ -359,7 +447,8 @@ class Session(object):
                 # profile.
                 cred_file = self.get_config_variable('credentials_file')
                 cred_profiles = botocore.configloader.raw_config_parse(
-                    cred_file)
+                    cred_file
+                )
                 for profile in cred_profiles:
                     cred_vars = cred_profiles[profile]
                     if profile not in self._config['profiles']:
@@ -407,9 +496,9 @@ class Session(object):
         :param token: An option session token used by STS session
             credentials.
         """
-        self._credentials = botocore.credentials.Credentials(access_key,
-                                                             secret_key,
-                                                             token)
+        self._credentials = botocore.credentials.Credentials(
+            access_key, secret_key, token
+        )
 
     def get_credentials(self):
         """
@@ -422,8 +511,22 @@ class Session(object):
         """
         if self._credentials is None:
             self._credentials = self._components.get_component(
-                'credential_provider').load_credentials()
+                'credential_provider'
+            ).load_credentials()
         return self._credentials
+
+    def get_auth_token(self):
+        """
+        Return the :class:`botocore.tokens.AuthToken` object associated with
+        this session. If the authorization token has not yet been loaded, this
+        will attempt to load it. If it has already been loaded, this will
+        return the cached authorization token.
+
+        """
+        if self._auth_token is None:
+            provider = self._components.get_component('token_provider')
+            self._auth_token = provider.load_token()
+        return self._auth_token
 
     def user_agent(self):
         """
@@ -435,7 +538,7 @@ class Session(object):
         Where:
 
          - agent_name is the value of the `user_agent_name` attribute
-           of the session object (`Boto` by default).
+           of the session object (`Botocore` by default).
          - agent_version is the value of the `user_agent_version`
            attribute of the session object (the botocore version by default).
            by default.
@@ -448,11 +551,13 @@ class Session(object):
         appended to the end of the user agent string.
 
         """
-        base = '%s/%s Python/%s %s/%s' % (self.user_agent_name,
-                                          self.user_agent_version,
-                                          platform.python_version(),
-                                          platform.system(),
-                                          platform.release())
+        base = (
+            f'{self.user_agent_name}/{self.user_agent_version} '
+            f'Python/{platform.python_version()} '
+            f'{platform.system()}/{platform.release()}'
+        )
+        if HAS_CRT:
+            base += ' awscrt/%s' % self._get_crt_version()
         if os.environ.get('AWS_EXECUTION_ENV') is not None:
             base += ' exec-env/%s' % os.environ.get('AWS_EXECUTION_ENV')
         if self.user_agent_extra:
@@ -489,13 +594,15 @@ class Session(object):
     def get_waiter_model(self, service_name, api_version=None):
         loader = self.get_component('data_loader')
         waiter_config = loader.load_service_model(
-            service_name, 'waiters-2', api_version)
+            service_name, 'waiters-2', api_version
+        )
         return waiter.WaiterModel(waiter_config)
 
     def get_paginator_model(self, service_name, api_version=None):
         loader = self.get_component('data_loader')
         paginator_config = loader.load_service_model(
-            service_name, 'paginators-1', api_version)
+            service_name, 'paginators-1', api_version
+        )
         return paginate.PaginatorModel(paginator_config)
 
     def get_service_data(self, service_name, api_version=None):
@@ -504,22 +611,24 @@ class Session(object):
         """
         data_path = service_name
         service_data = self.get_component('data_loader').load_service_model(
-            data_path,
-            type_name='service-2',
-            api_version=api_version
+            data_path, type_name='service-2', api_version=api_version
         )
         service_id = EVENT_ALIASES.get(service_name, service_name)
-        self._events.emit('service-data-loaded.%s' % service_id,
-                          service_data=service_data,
-                          service_name=service_name, session=self)
+        self._events.emit(
+            'service-data-loaded.%s' % service_id,
+            service_data=service_data,
+            service_name=service_name,
+            session=self,
+        )
         return service_data
 
     def get_available_services(self):
         """
         Return a list of names of available services.
         """
-        return self.get_component('data_loader')\
-            .list_available_services(type_name='service-2')
+        return self.get_component('data_loader').list_available_services(
+            type_name='service-2'
+        )
 
     def set_debug_logger(self, logger_name='botocore'):
         """
@@ -528,8 +637,9 @@ class Session(object):
         """
         self.set_stream_logger(logger_name, logging.DEBUG)
 
-    def set_stream_logger(self, logger_name, log_level, stream=None,
-                          format_string=None):
+    def set_stream_logger(
+        self, logger_name, log_level, stream=None, format_string=None
+    ):
         """
         Convenience method to configure a stream logger.
 
@@ -596,8 +706,9 @@ class Session(object):
         # add ch to logger
         log.addHandler(ch)
 
-    def register(self, event_name, handler, unique_id=None,
-                 unique_id_uses_count=False):
+    def register(
+        self, event_name, handler, unique_id=None, unique_id_uses_count=False
+    ):
         """Register a handler with an event.
 
         :type event_name: str
@@ -630,11 +741,20 @@ class Session(object):
             ``unique_id_uses_count`` value declared by the very first
             ``register`` call for that ``unique_id``.
         """
-        self._events.register(event_name, handler, unique_id,
-                              unique_id_uses_count=unique_id_uses_count)
+        self._events.register(
+            event_name,
+            handler,
+            unique_id,
+            unique_id_uses_count=unique_id_uses_count,
+        )
 
-    def unregister(self, event_name, handler=None, unique_id=None,
-                   unique_id_uses_count=False):
+    def unregister(
+        self,
+        event_name,
+        handler=None,
+        unique_id=None,
+        unique_id_uses_count=False,
+    ):
         """Unregister a handler with an event.
 
         :type event_name: str
@@ -663,9 +783,12 @@ class Session(object):
             ``unique_id_uses_count`` value declared by the very first
             ``register`` call for that ``unique_id``.
         """
-        self._events.unregister(event_name, handler=handler,
-                                unique_id=unique_id,
-                                unique_id_uses_count=unique_id_uses_count)
+        self._events.unregister(
+            event_name,
+            handler=handler,
+            unique_id=unique_id,
+            unique_id_uses_count=unique_id_uses_count,
+        )
 
     def emit(self, event_name, **kwargs):
         return self._events.emit(event_name, **kwargs)
@@ -683,7 +806,8 @@ class Session(object):
                     'Fetching the %s component with the get_component() '
                     'method is deprecated as the component has always been '
                     'considered an internal interface of botocore' % name,
-                    DeprecationWarning)
+                    DeprecationWarning,
+                )
                 return self._internal_components.get_component(name)
             raise
 
@@ -705,15 +829,24 @@ class Session(object):
     def lazy_register_component(self, name, component):
         self._components.lazy_register_component(name, component)
 
-    def create_client(self, service_name, region_name=None, api_version=None,
-                      use_ssl=True, verify=None, endpoint_url=None,
-                      aws_access_key_id=None, aws_secret_access_key=None,
-                      aws_session_token=None, config=None):
+    def create_client(
+        self,
+        service_name,
+        region_name=None,
+        api_version=None,
+        use_ssl=True,
+        verify=None,
+        endpoint_url=None,
+        aws_access_key_id=None,
+        aws_secret_access_key=None,
+        aws_session_token=None,
+        config=None,
+    ):
         """Create a botocore client.
 
         :type service_name: string
         :param service_name: The name of the service for which a client will
-            be created.  You can use the ``Sesssion.get_available_services()``
+            be created.  You can use the ``Session.get_available_services()``
             method to get a list of all available service names.
 
         :type region_name: string
@@ -788,13 +921,7 @@ class Session(object):
         elif default_client_config is not None:
             config = default_client_config
 
-        # Figure out the user-provided region based on the various
-        # configuration options.
-        if region_name is None:
-            if config and config.region_name is not None:
-                region_name = config.region_name
-            else:
-                region_name = self.get_config_variable('region')
+        region_name = self._resolve_region_name(region_name, config)
 
         # Figure out the verify value base on the various
         # configuration options.
@@ -803,43 +930,137 @@ class Session(object):
 
         if api_version is None:
             api_version = self.get_config_variable('api_versions').get(
-                service_name, None)
+                service_name, None
+            )
 
         loader = self.get_component('data_loader')
         event_emitter = self.get_component('event_emitter')
-        response_parser_factory = self.get_component(
-            'response_parser_factory')
+        response_parser_factory = self.get_component('response_parser_factory')
         if config is not None and config.signature_version is UNSIGNED:
             credentials = None
-        elif aws_access_key_id is not None and aws_secret_access_key is not None:
+        elif (
+            aws_access_key_id is not None and aws_secret_access_key is not None
+        ):
             credentials = botocore.credentials.Credentials(
                 access_key=aws_access_key_id,
                 secret_key=aws_secret_access_key,
-                token=aws_session_token)
-        elif self._missing_cred_vars(aws_access_key_id,
-                                     aws_secret_access_key):
+                token=aws_session_token,
+            )
+        elif self._missing_cred_vars(aws_access_key_id, aws_secret_access_key):
             raise PartialCredentialsError(
                 provider='explicit',
-                cred_var=self._missing_cred_vars(aws_access_key_id,
-                                                 aws_secret_access_key))
+                cred_var=self._missing_cred_vars(
+                    aws_access_key_id, aws_secret_access_key
+                ),
+            )
         else:
             credentials = self.get_credentials()
+        auth_token = self.get_auth_token()
         endpoint_resolver = self._get_internal_component('endpoint_resolver')
         exceptions_factory = self._get_internal_component('exceptions_factory')
-        config_store = self.get_component('config_store')
+        config_store = copy.copy(self.get_component('config_store'))
+        user_agent_creator = self.get_component('user_agent_creator')
+        # Session configuration values for the user agent string are applied
+        # just before each client creation because they may have been modified
+        # at any time between session creation and client creation.
+        user_agent_creator.set_session_config(
+            session_user_agent_name=self.user_agent_name,
+            session_user_agent_version=self.user_agent_version,
+            session_user_agent_extra=self.user_agent_extra,
+        )
+        defaults_mode = self._resolve_defaults_mode(config, config_store)
+        if defaults_mode != 'legacy':
+            smart_defaults_factory = self._get_internal_component(
+                'smart_defaults_factory'
+            )
+            smart_defaults_factory.merge_smart_defaults(
+                config_store, defaults_mode, region_name
+            )
+
+        self._add_configured_endpoint_provider(
+            client_name=service_name,
+            config_store=config_store,
+        )
+
         client_creator = botocore.client.ClientCreator(
-            loader, endpoint_resolver, self.user_agent(), event_emitter,
-            retryhandler, translate, response_parser_factory,
-            exceptions_factory, config_store)
+            loader,
+            endpoint_resolver,
+            self.user_agent(),
+            event_emitter,
+            retryhandler,
+            translate,
+            response_parser_factory,
+            exceptions_factory,
+            config_store,
+            user_agent_creator=user_agent_creator,
+        )
         client = client_creator.create_client(
-            service_name=service_name, region_name=region_name,
-            is_secure=use_ssl, endpoint_url=endpoint_url, verify=verify,
-            credentials=credentials, scoped_config=self.get_scoped_config(),
-            client_config=config, api_version=api_version)
+            service_name=service_name,
+            region_name=region_name,
+            is_secure=use_ssl,
+            endpoint_url=endpoint_url,
+            verify=verify,
+            credentials=credentials,
+            scoped_config=self.get_scoped_config(),
+            client_config=config,
+            api_version=api_version,
+            auth_token=auth_token,
+        )
         monitor = self._get_internal_component('monitor')
         if monitor is not None:
             monitor.register(client.meta.events)
         return client
+
+    def _resolve_region_name(self, region_name, config):
+        # Figure out the user-provided region based on the various
+        # configuration options.
+        if region_name is None:
+            if config and config.region_name is not None:
+                region_name = config.region_name
+            else:
+                region_name = self.get_config_variable('region')
+
+        validate_region_name(region_name)
+        # For any client that we create in retrieving credentials
+        # we want to create it using the same region as specified in
+        # creating this client. It is important to note though that the
+        # credentials client is only created once per session. So if a new
+        # client is created with a different region, its credential resolver
+        # will use the region of the first client. However, that is not an
+        # issue as of now because the credential resolver uses only STS and
+        # the credentials returned at regional endpoints are valid across
+        # all regions in the partition.
+        self._last_client_region_used = region_name
+        return region_name
+
+    def _resolve_defaults_mode(self, client_config, config_store):
+        mode = config_store.get_config_variable('defaults_mode')
+
+        if client_config and client_config.defaults_mode:
+            mode = client_config.defaults_mode
+
+        default_config_resolver = self._get_internal_component(
+            'default_config_resolver'
+        )
+        default_modes = default_config_resolver.get_default_modes()
+        lmode = mode.lower()
+        if lmode not in default_modes:
+            raise InvalidDefaultsMode(
+                mode=mode, valid_modes=', '.join(default_modes)
+            )
+
+        return lmode
+
+    def _add_configured_endpoint_provider(self, client_name, config_store):
+        chain = ConfiguredEndpointProvider(
+            full_config=self.full_config,
+            scoped_config=self.get_scoped_config(),
+            client_name=client_name,
+        )
+        config_store.set_config_provider(
+            logical_name='endpoint_url',
+            provider=chain,
+        )
 
     def _missing_cred_vars(self, access_key, secret_key):
         if access_key is not None and secret_key is None:
@@ -857,8 +1078,22 @@ class Session(object):
         resolver = self._get_internal_component('endpoint_resolver')
         return resolver.get_available_partitions()
 
-    def get_available_regions(self, service_name, partition_name='aws',
-                              allow_non_regional=False):
+    def get_partition_for_region(self, region_name):
+        """Lists the partition name of a particular region.
+
+        :type region_name: string
+        :param region_name: Name of the region to list partition for (e.g.,
+             us-east-1).
+
+        :rtype: string
+        :return: Returns the respective partition name (e.g., aws).
+        """
+        resolver = self._get_internal_component('endpoint_resolver')
+        return resolver.get_partition_for_region(region_name)
+
+    def get_available_regions(
+        self, service_name, partition_name='aws', allow_non_regional=False
+    ):
         """Lists the region and endpoint names of a particular partition.
 
         :type service_name: string
@@ -882,16 +1117,19 @@ class Session(object):
         try:
             service_data = self.get_service_data(service_name)
             endpoint_prefix = service_data['metadata'].get(
-                'endpointPrefix', service_name)
+                'endpointPrefix', service_name
+            )
             results = resolver.get_available_endpoints(
-                endpoint_prefix, partition_name, allow_non_regional)
+                endpoint_prefix, partition_name, allow_non_regional
+            )
         except UnknownServiceError:
             pass
         return results
 
 
-class ComponentLocator(object):
+class ComponentLocator:
     """Service locator for session components."""
+
     def __init__(self):
         self._components = {}
         self._deferred = {}
@@ -924,7 +1162,7 @@ class ComponentLocator(object):
             pass
 
 
-class SessionVarDict(collections.MutableMapping):
+class SessionVarDict(MutableMapping):
     def __init__(self, session, session_vars):
         self._session = session
         self._store = copy.copy(session_vars)
@@ -945,8 +1183,9 @@ class SessionVarDict(collections.MutableMapping):
     def __len__(self):
         return len(self._store)
 
-    def _update_config_store_from_session_vars(self, logical_name,
-                                               config_options):
+    def _update_config_store_from_session_vars(
+        self, logical_name, config_options
+    ):
         # This is for backwards compatibility. The new preferred way to
         # modify configuration logic is to use the component system to get
         # the config_store component from the session, and then update
@@ -962,14 +1201,14 @@ class SessionVarDict(collections.MutableMapping):
             config_chain_builder.create_config_chain(
                 instance_name=logical_name,
                 env_var_names=env_vars,
-                config_property_name=config_name,
+                config_property_names=config_name,
                 default=default,
                 conversion_func=typecast,
-            )
+            ),
         )
 
 
-class SubsetChainConfigFactory(object):
+class SubsetChainConfigFactory:
     """A class for creating backwards compatible configuration chains.
 
     This class can be used instead of
@@ -978,13 +1217,19 @@ class SubsetChainConfigFactory(object):
     out providers that are not in the methods tuple when creating a new config
     chain.
     """
+
     def __init__(self, session, methods, environ=None):
         self._factory = ConfigChainFactory(session, environ)
         self._supported_methods = methods
 
-    def create_config_chain(self, instance_name=None, env_var_names=None,
-                            config_property_name=None, default=None,
-                            conversion_func=None):
+    def create_config_chain(
+        self,
+        instance_name=None,
+        env_var_names=None,
+        config_property_name=None,
+        default=None,
+        conversion_func=None,
+    ):
         """Build a config chain following the standard botocore pattern.
 
         This config chain factory will omit any providers not in the methods
@@ -1003,7 +1248,7 @@ class SubsetChainConfigFactory(object):
         return self._factory.create_config_chain(
             instance_name=instance_name,
             env_var_names=env_var_names,
-            config_property_name=config_property_name,
+            config_property_names=config_property_name,
             default=default,
             conversion_func=conversion_func,
         )

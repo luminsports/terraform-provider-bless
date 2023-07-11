@@ -87,7 +87,7 @@ def lambda_handler_host(
 
     # cert_builder is needed to obtain the SSH public key's fingerprint
     key_id = 'request[{}] ssh_key[{}] ca[{}] valid_to[{}]'.format(
-        context.aws_request_id, cert_builder.ssh_public_key.fingerprint, context.invoked_function_arn,
+        context.aws_request_id, cert_builder.public_key.fingerprint, context.invoked_function_arn,
         time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime(valid_before))
     )
 

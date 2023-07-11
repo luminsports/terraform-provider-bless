@@ -1,13 +1,23 @@
-altgraph @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/altgraph-0.17.2-py2.py3-none-any.whl
-appdirs==1.4.4
-certifi==2021.5.30
+async-timeout==4.0.2
+bleak==0.19.5
+bless==0.2.4
+boto3==1.26.32
+botocore==1.29.32
 cffi==1.15.1
-distlib==0.3.2
-filelock==3.0.12
-future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/future-0.18.2-py3-none-any.whl
-macholib @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/macholib-1.15.2-py2.py3-none-any.whl
-pipenv==2021.5.29
+cryptography==38.0.4
+distlib==0.3.6
+filelock==3.8.2
+ipaddress==1.0.23
+jmespath==1.0.1
+platformdirs==2.6.0
+protobuf==4.21.12
 pycparser==2.21
-six @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/six-1.15.0-py2.py3-none-any.whl
-virtualenv==20.4.7
-virtualenv-clone==0.5.4
+pyobjc-core==8.5.1
+pyobjc-framework-Cocoa==8.5.1
+pyobjc-framework-CoreBluetooth==8.5.1
+pyobjc-framework-libdispatch==8.5.1
+python-dateutil==2.8.2
+PyYAML==6.0
+s3transfer==0.6.0
+six==1.16.0
+urllib3==1.26.13

@@ -429,22 +429,6 @@
       } ],
       "documentation" : "Creates a version of a subscription definition which has already been defined."
     },
-    "TagResource" : {
-      "name" : "TagResource",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/tags/{resource-arn}",
-        "responseCode" : 204
-      },
-      "input" : {
-        "shape" : "TagResourceRequest"
-      },
-      "errors" : [ {
-        "shape" : "BadRequestException",
-        "documentation" : "invalid request"
-      } ],
-      "documentation" : "Add tags to a resource."
-    },
     "DeleteConnectorDefinition" : {
       "name" : "DeleteConnectorDefinition",
       "http" : {
@@ -604,22 +588,6 @@
         "documentation" : "invalid request"
       } ],
       "documentation" : "Deletes a subscription definition."
-    },
-    "UntagResource" : {
-      "name" : "UntagResource",
-      "http" : {
-        "method" : "DELETE",
-        "requestUri" : "/tags/{resource-arn}",
-        "responseCode" : 204
-      },
-      "input" : {
-        "shape" : "UntagResourceRequest"
-      },
-      "errors" : [ {
-        "shape" : "BadRequestException",
-        "documentation" : "invalid request"
-      } ],
-      "documentation" : "Remove tags with specified keys from a resource."
     },
     "DisassociateRoleFromGroup" : {
       "name" : "DisassociateRoleFromGroup",
@@ -1128,6 +1096,29 @@
       } ],
       "documentation" : "Retrieves information about a subscription definition version."
     },
+    "GetThingRuntimeConfiguration" : {
+      "name" : "GetThingRuntimeConfiguration",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/greengrass/things/{ThingName}/runtimeconfig",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "GetThingRuntimeConfigurationRequest"
+      },
+      "output" : {
+        "shape" : "GetThingRuntimeConfigurationResponse",
+        "documentation" : "Success. The response contains the runtime configuration for the given thing."
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException",
+        "documentation" : "invalid request"
+      }, {
+        "shape" : "InternalServerErrorException",
+        "documentation" : "server error"
+      } ],
+      "documentation" : "Get the runtime configuration of a thing."
+    },
     "ListBulkDeploymentDetailedReports" : {
       "name" : "ListBulkDeploymentDetailedReports",
       "http" : {
@@ -1507,13 +1498,14 @@
         "shape" : "ListTagsForResourceRequest"
       },
       "output" : {
-        "shape" : "ListTagsForResourceResponse"
+        "shape" : "ListTagsForResourceResponse",
+        "documentation" : "HTTP Status Code 200: OK."
       },
       "errors" : [ {
-        "shape" :  "BadRequestException",
+        "shape" : "BadRequestException",
         "documentation" : "invalid request"
       } ],
-      "documentation" : "Retrieves the tags for a resource."
+      "documentation" : "Retrieves a list of resource tags for a resource arn."
     },
     "ResetDeployments" : {
       "name" : "ResetDeployments",
@@ -1574,6 +1566,38 @@
         "documentation" : "invalid request"
       } ],
       "documentation" : "Stops the execution of a bulk deployment. This action returns a status of ''Stopping'' until the deployment is stopped. You cannot start a new bulk deployment while a previous deployment is in the ''Stopping'' state. This action doesn't rollback completed deployments or cancel pending deployments."
+    },
+    "TagResource" : {
+      "name" : "TagResource",
+      "http" : {
+        "method" : "POST",
+        "requestUri" : "/tags/{resource-arn}",
+        "responseCode" : 204
+      },
+      "input" : {
+        "shape" : "TagResourceRequest"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException",
+        "documentation" : "invalid request"
+      } ],
+      "documentation" : "Adds tags to a Greengrass resource. Valid resources are 'Group', 'ConnectorDefinition', 'CoreDefinition', 'DeviceDefinition', 'FunctionDefinition', 'LoggerDefinition', 'SubscriptionDefinition', 'ResourceDefinition', and 'BulkDeployment'."
+    },
+    "UntagResource" : {
+      "name" : "UntagResource",
+      "http" : {
+        "method" : "DELETE",
+        "requestUri" : "/tags/{resource-arn}",
+        "responseCode" : 204
+      },
+      "input" : {
+        "shape" : "UntagResourceRequest"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException",
+        "documentation" : "invalid request"
+      } ],
+      "documentation" : "Remove resource tags from a Greengrass Resource."
     },
     "UpdateConnectivityInfo" : {
       "name" : "UpdateConnectivityInfo",
@@ -1780,6 +1804,29 @@
         "documentation" : "invalid request"
       } ],
       "documentation" : "Updates a subscription definition."
+    },
+    "UpdateThingRuntimeConfiguration" : {
+      "name" : "UpdateThingRuntimeConfiguration",
+      "http" : {
+        "method" : "PUT",
+        "requestUri" : "/greengrass/things/{ThingName}/runtimeconfig",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "UpdateThingRuntimeConfigurationRequest"
+      },
+      "output" : {
+        "shape" : "UpdateThingRuntimeConfigurationResponse",
+        "documentation" : "success"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException",
+        "documentation" : "invalid request"
+      }, {
+        "shape" : "InternalServerErrorException",
+        "documentation" : "server error"
+      } ],
+      "documentation" : "Updates the runtime configuration of a thing."
     }
   },
   "shapes" : {
@@ -1794,10 +1841,10 @@
         },
         "RoleArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the role you wish to associate with this group."
+          "documentation" : "The ARN of the role you wish to associate with this group. The existence of the role is not validated."
         }
       },
-      "required" : [ "GroupId" ]
+      "required" : [ "GroupId", "RoleArn" ]
     },
     "AssociateRoleToGroupResponse" : {
       "type" : "structure",
@@ -1815,7 +1862,8 @@
           "shape" : "__string",
           "documentation" : "The ARN of the service role you wish to associate with your account."
         }
-      }
+      },
+      "required" : [ "RoleArn" ]
     },
     "AssociateServiceRoleToAccountResponse" : {
       "type" : "structure",
@@ -1935,6 +1983,10 @@
         "shape" : "BulkDeployment"
       }
     },
+    "ConfigurationSyncStatus" : {
+      "type" : "string",
+      "enum" : [ "InSync", "OutOfSync" ]
+    },
     "ConnectivityInfo" : {
       "type" : "structure",
       "members" : {
@@ -1974,7 +2026,7 @@
         }
       },
       "documentation" : "Information about a connector. Connectors run on the Greengrass core and contain built-in integration with local infrastructure, device protocols, AWS, and other cloud services.",
-      "required" : [ ]
+      "required" : [ "ConnectorArn", "Id" ]
     },
     "ConnectorDefinitionVersion" : {
       "type" : "structure",
@@ -2007,7 +2059,7 @@
         }
       },
       "documentation" : "Information about a core.",
-      "required" : [ ]
+      "required" : [ "ThingArn", "Id", "CertificateArn" ]
     },
     "CoreDefinitionVersion" : {
       "type" : "structure",
@@ -2036,9 +2088,9 @@
           "shape" : "__string",
           "documentation" : "The name of the connector definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2063,11 +2115,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2110,11 +2162,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2135,9 +2187,9 @@
           "shape" : "__string",
           "documentation" : "The name of the core definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       },
       "documentation" : "Information needed to create a core definition."
@@ -2163,11 +2215,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2210,11 +2262,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2246,7 +2298,7 @@
           "documentation" : "The ID of the group version to be deployed."
         }
       },
-      "required" : [ "GroupId" ]
+      "required" : [ "GroupId", "DeploymentType" ]
     },
     "CreateDeploymentResponse" : {
       "type" : "structure",
@@ -2278,9 +2330,9 @@
           "shape" : "__string",
           "documentation" : "The name of the device definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2305,11 +2357,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2352,11 +2404,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2377,9 +2429,9 @@
           "shape" : "__string",
           "documentation" : "The name of the function definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2404,11 +2456,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2456,11 +2508,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2508,11 +2560,12 @@
           "shape" : "__string",
           "documentation" : "The name of the group."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
-      }
+      },
+      "required" : [ "Name" ]
     },
     "CreateGroupResponse" : {
       "type" : "structure",
@@ -2535,11 +2588,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2606,11 +2659,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2631,9 +2684,9 @@
           "shape" : "__string",
           "documentation" : "The name of the logger definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2658,11 +2711,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2705,11 +2758,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2730,9 +2783,9 @@
           "shape" : "__string",
           "documentation" : "The name of the resource definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2757,11 +2810,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2804,11 +2857,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
     },
@@ -2839,7 +2892,8 @@
         "UpdateTargetsOperatingSystem" : {
           "shape" : "UpdateTargetsOperatingSystem"
         }
-      }
+      },
+      "required" : [ "S3UrlSignerRole", "UpdateTargetsArchitecture", "SoftwareToUpdate", "UpdateTargets", "UpdateTargetsOperatingSystem" ]
     },
     "CreateSoftwareUpdateJobResponse" : {
       "type" : "structure",
@@ -2851,6 +2905,10 @@
         "IotJobId" : {
           "shape" : "__string",
           "documentation" : "The IoT Job Id corresponding to this update."
+        },
+        "PlatformSoftwareVersion" : {
+          "shape" : "__string",
+          "documentation" : "The software version installed on the device or devices after the update."
         }
       }
     },
@@ -2871,9 +2929,9 @@
           "shape" : "__string",
           "documentation" : "The name of the subscription definition."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
       }
     },
@@ -2898,11 +2956,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -2945,29 +3003,13 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       }
-    },
-    "TagResourceRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ResourceArn" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "resource-arn",
-          "documentation" : "The Amazon Resource Name (ARN) of the resource."
-        },
-        "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "A map of the key-value pairs for the resource tag."
-        }
-      },
-      "required" : [ "ResourceArn", "tags" ]
     },
     "DefinitionInformation" : {
       "type" : "structure",
@@ -2990,11 +3032,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
@@ -3003,7 +3045,7 @@
         "Tags" : {
           "shape" : "Tags",
           "locationName" : "tags",
-	  "documentation" : "The tags for the definition."
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       },
       "documentation" : "Information about a definition."
@@ -3136,24 +3178,6 @@
       "type" : "structure",
       "members" : { }
     },
-    "UntagResourceRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ResourceArn" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "resource-arn",
-          "documentation" : "The Amazon Resource Name (ARN) of the resource."
-        },
-        "TagKeys" : {
-          "shape" : "__listOf__string",
-          "location" : "querystring",
-          "locationName" : "tagKeys",
-          "documentation" : "A list of the keys to remove from the resource tags."
-        }
-      },
-      "required" : [ "TagKeys", "ResourceArn" ]
-    },
     "Deployment" : {
       "type" : "structure",
       "members" : {
@@ -3212,7 +3236,7 @@
         }
       },
       "documentation" : "Information about a device.",
-      "required" : [ ]
+      "required" : [ "ThingArn", "Id", "CertificateArn" ]
     },
     "DeviceDefinitionVersion" : {
       "type" : "structure",
@@ -3305,7 +3329,7 @@
         }
       },
       "documentation" : "Information about a Lambda function.",
-      "required" : [ ]
+      "required" : [ "Id" ]
     },
     "FunctionConfiguration" : {
       "type" : "structure",
@@ -3337,6 +3361,10 @@
         "Timeout" : {
           "shape" : "__integer",
           "documentation" : "The allowed function execution time, after which Lambda should terminate the function. This timeout still applies to pinned Lambda functions for each request."
+        },
+        "FunctionRuntimeOverride" : {
+          "shape" : "__string",
+          "documentation" : "The Lambda runtime supported by Greengrass which is to be used instead of the one specified in the Lambda function."
         }
       },
       "documentation" : "The configuration of the Lambda function."
@@ -3504,8 +3532,8 @@
           "documentation" : "Error message"
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -3568,19 +3596,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -3597,7 +3625,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "ConnectorDefinitionVersionId",
-          "documentation" : "The ID of the connector definition version."
+          "documentation" : "The ID of the connector definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListConnectorDefinitionVersions'' requests. If the version is the last one that was associated with a connector definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         },
         "NextToken" : {
           "shape" : "__string",
@@ -3670,19 +3698,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
-        }, 
+        },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -3699,7 +3727,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "CoreDefinitionVersionId",
-          "documentation" : "The ID of the core definition version."
+          "documentation" : "The ID of the core definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListCoreDefinitionVersions'' requests. If the version is the last one that was associated with a core definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         }
       },
       "required" : [ "CoreDefinitionId", "CoreDefinitionVersionId" ]
@@ -3809,19 +3837,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -3838,7 +3866,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "DeviceDefinitionVersionId",
-          "documentation" : "The ID of the device definition version."
+          "documentation" : "The ID of the device definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListDeviceDefinitionVersions'' requests. If the version is the last one that was associated with a device definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         },
         "NextToken" : {
           "shape" : "__string",
@@ -3911,19 +3939,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -3940,7 +3968,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "FunctionDefinitionVersionId",
-          "documentation" : "The ID of the function definition version."
+          "documentation" : "The ID of the function definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListFunctionDefinitionVersions'' requests. If the version is the last one that was associated with a function definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         },
         "NextToken" : {
           "shape" : "__string",
@@ -4077,19 +4105,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -4106,7 +4134,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "GroupVersionId",
-          "documentation" : "The ID of the group version."
+          "documentation" : "The ID of the group version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListGroupVersions'' requests. If the version is the last one that was associated with a group, the value also maps to the ''LatestVersion'' property of the corresponding ''GroupInformation'' object."
         }
       },
       "required" : [ "GroupVersionId", "GroupId" ]
@@ -4128,11 +4156,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the group version."
+          "documentation" : "The ID of the group that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID for the version of the group."
+          "documentation" : "The ID of the group version."
         }
       }
     },
@@ -4169,19 +4197,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -4198,7 +4226,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "LoggerDefinitionVersionId",
-          "documentation" : "The ID of the logger definition version."
+          "documentation" : "The ID of the logger definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListLoggerDefinitionVersions'' requests. If the version is the last one that was associated with a logger definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         },
         "NextToken" : {
           "shape" : "__string",
@@ -4267,19 +4295,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -4296,7 +4324,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "ResourceDefinitionVersionId",
-          "documentation" : "The ID of the resource definition version."
+          "documentation" : "The ID of the resource definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListResourceDefinitionVersions'' requests. If the version is the last one that was associated with a resource definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         }
       },
       "required" : [ "ResourceDefinitionVersionId", "ResourceDefinitionId" ]
@@ -4376,19 +4404,19 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the definition."
+          "documentation" : "The ID of the latest version associated with the definition."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the definition."
+          "documentation" : "The ARN of the latest version associated with the definition."
         },
         "Name" : {
           "shape" : "__string",
           "documentation" : "The name of the definition."
         },
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "The tags for the definition."
+          "shape" : "Tags",
+          "documentation" : "Tag(s) attached to the resource arn."
         }
       }
     },
@@ -4411,7 +4439,7 @@
           "shape" : "__string",
           "location" : "uri",
           "locationName" : "SubscriptionDefinitionVersionId",
-          "documentation" : "The ID of the subscription definition version."
+          "documentation" : "The ID of the subscription definition version. This value maps to the ''Version'' property of the corresponding ''VersionInformation'' object, which is returned by ''ListSubscriptionDefinitionVersions'' requests. If the version is the last one that was associated with a subscription definition, the value also maps to the ''LatestVersion'' property of the corresponding ''DefinitionInformation'' object."
         }
       },
       "required" : [ "SubscriptionDefinitionId", "SubscriptionDefinitionVersionId" ]
@@ -4442,6 +4470,27 @@
         "Version" : {
           "shape" : "__string",
           "documentation" : "The version of the subscription definition version."
+        }
+      }
+    },
+    "GetThingRuntimeConfigurationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ThingName" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "ThingName",
+          "documentation" : "The thing name."
+        }
+      },
+      "required" : [ "ThingName" ]
+    },
+    "GetThingRuntimeConfigurationResponse" : {
+      "type" : "structure",
+      "members" : {
+        "RuntimeConfiguration" : {
+          "shape" : "RuntimeConfiguration",
+          "documentation" : "Runtime configuration for a thing."
         }
       }
     },
@@ -4498,11 +4547,11 @@
         },
         "LatestVersion" : {
           "shape" : "__string",
-          "documentation" : "The latest version of the group."
+          "documentation" : "The ID of the latest version associated with the group."
         },
         "LatestVersionArn" : {
           "shape" : "__string",
-          "documentation" : "The ARN of the latest version of the group."
+          "documentation" : "The ARN of the latest version associated with the group."
         },
         "Name" : {
           "shape" : "__string",
@@ -5268,8 +5317,7 @@
       "type" : "structure",
       "members" : {
         "tags" : {
-          "shape" : "__mapOf__string",
-          "documentation" : "A map of the key-value pairs for the resource tag."
+          "shape" : "Tags"
         }
       }
     },
@@ -5344,7 +5392,7 @@
         }
       },
       "documentation" : "Information about a logger",
-      "required" : [ ]
+      "required" : [ "Type", "Level", "Id", "Component" ]
     },
     "LoggerComponent" : {
       "type" : "string",
@@ -5426,7 +5474,7 @@
         }
       },
       "documentation" : "Information about a resource.",
-      "required" : [ ]
+      "required" : [ "ResourceDataContainer", "Id", "Name" ]
     },
     "ResourceAccessPolicy" : {
       "type" : "structure",
@@ -5441,7 +5489,7 @@
         }
       },
       "documentation" : "A policy used by the function to access a resource.",
-      "required" : [ ]
+      "required" : [ "ResourceId" ]
     },
     "ResourceDataContainer" : {
       "type" : "structure",
@@ -5479,12 +5527,50 @@
       },
       "documentation" : "Information about a resource definition version."
     },
+    "ResourceDownloadOwnerSetting" : {
+      "type" : "structure",
+      "members" : {
+        "GroupOwner" : {
+          "shape" : "__string",
+          "documentation" : "The group owner of the resource. This is the name of an existing Linux OS group on the system or a GID. The group's permissions are added to the Lambda process."
+        },
+        "GroupPermission" : {
+          "shape" : "Permission",
+          "documentation" : "The permissions that the group owner has to the resource. Valid values are ''rw'' (read/write) or ''ro'' (read-only)."
+        }
+      },
+      "documentation" : "The owner setting for downloaded machine learning resources.",
+      "required" : [ "GroupOwner", "GroupPermission" ]
+    },
+    "RuntimeConfiguration" : {
+      "type" : "structure",
+      "members" : {
+        "TelemetryConfiguration" : {
+          "shape" : "TelemetryConfiguration",
+          "documentation" : "Configuration for telemetry service."
+        }
+      },
+      "documentation" : "Runtime configuration for a thing."
+    },
+    "RuntimeConfigurationUpdate" : {
+      "type" : "structure",
+      "members" : {
+        "TelemetryConfiguration" : {
+          "shape" : "TelemetryConfigurationUpdate",
+          "documentation" : "Configuration for telemetry service."
+        }
+      },
+      "documentation" : "Runtime configuration for a thing."
+    },
     "S3MachineLearningModelResourceData" : {
       "type" : "structure",
       "members" : {
         "DestinationPath" : {
           "shape" : "__string",
           "documentation" : "The absolute local path of the resource inside the Lambda environment."
+        },
+        "OwnerSetting" : {
+          "shape" : "ResourceDownloadOwnerSetting"
         },
         "S3Uri" : {
           "shape" : "__string",
@@ -5503,6 +5589,9 @@
         "DestinationPath" : {
           "shape" : "__string",
           "documentation" : "The absolute local path of the resource inside the Lambda environment."
+        },
+        "OwnerSetting" : {
+          "shape" : "ResourceDownloadOwnerSetting"
         },
         "SageMakerJobArn" : {
           "shape" : "__string",
@@ -5547,11 +5636,12 @@
           "shape" : "__string",
           "documentation" : "The URI of the input file contained in the S3 bucket. The execution role must have ''getObject'' permissions on this bucket to access the input file. The input file is a JSON-serialized, line delimited file with UTF-8 encoding that provides a list of group and version IDs and the deployment type. This file must be less than 100 MB. Currently, AWS IoT Greengrass supports only ''NewDeployment'' deployment types."
         },
-        "tags": {
-          "shape": "Tags",
-          "documentation": "Tag(s) to add to the new resource"
+        "tags" : {
+          "shape" : "Tags",
+          "documentation" : "Tag(s) to add to the new resource."
         }
-      }
+      },
+      "required" : [ "ExecutionRoleArn", "InputFileUri" ]
     },
     "StartBulkDeploymentResponse" : {
       "type" : "structure",
@@ -5603,7 +5693,7 @@
         }
       },
       "documentation" : "Information about a subscription.",
-      "required" : [ ]
+      "required" : [ "Target", "Id", "Subject", "Source" ]
     },
     "SubscriptionDefinitionVersion" : {
       "type" : "structure",
@@ -5615,14 +5705,79 @@
       },
       "documentation" : "Information about a subscription definition version."
     },
+    "TagResourceRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ResourceArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "resource-arn",
+          "documentation" : "The Amazon Resource Name (ARN) of the resource."
+        },
+        "tags" : {
+          "shape" : "Tags"
+        }
+      },
+      "documentation" : "A map of the key-value pairs for the resource tag.",
+      "required" : [ "ResourceArn" ]
+    },
     "Tags" : {
       "type" : "map",
+      "documentation" : "The key-value pair for the resource tag.",
       "key" : {
         "shape" : "__string"
       },
       "value" : {
         "shape" : "__string"
       }
+    },
+    "Telemetry" : {
+      "type" : "string",
+      "enum" : [ "On", "Off" ]
+    },
+    "TelemetryConfiguration" : {
+      "type" : "structure",
+      "members" : {
+        "ConfigurationSyncStatus" : {
+          "shape" : "ConfigurationSyncStatus",
+          "documentation" : "Synchronization status of the device reported configuration with the desired configuration."
+        },
+        "Telemetry" : {
+          "shape" : "Telemetry",
+          "documentation" : "Configure telemetry to be on or off."
+        }
+      },
+      "documentation" : "Configuration settings for running telemetry.",
+      "required" : [ "Telemetry" ]
+    },
+    "TelemetryConfigurationUpdate" : {
+      "type" : "structure",
+      "members" : {
+        "Telemetry" : {
+          "shape" : "Telemetry",
+          "documentation" : "Configure telemetry to be on or off."
+        }
+      },
+      "documentation" : "Configuration settings for running telemetry.",
+      "required" : [ "Telemetry" ]
+    },
+    "UntagResourceRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ResourceArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "resource-arn",
+          "documentation" : "The Amazon Resource Name (ARN) of the resource."
+        },
+        "TagKeys" : {
+          "shape" : "__listOf__string",
+          "location" : "querystring",
+          "locationName" : "tagKeys",
+          "documentation" : "An array of tag keys to delete"
+        }
+      },
+      "required" : [ "TagKeys", "ResourceArn" ]
     },
     "UpdateAgentLogLevel" : {
       "type" : "string",
@@ -5863,12 +6018,32 @@
     "UpdateTargetsArchitecture" : {
       "type" : "string",
       "documentation" : "The architecture of the cores which are the targets of an update.",
-      "enum" : [ "armv7l", "x86_64", "aarch64" ]
+      "enum" : [ "armv6l", "armv7l", "x86_64", "aarch64" ]
     },
     "UpdateTargetsOperatingSystem" : {
       "type" : "string",
       "documentation" : "The operating system of the cores which are the targets of an update.",
-      "enum" : [ "ubuntu", "raspbian", "amazon_linux" ]
+      "enum" : [ "ubuntu", "raspbian", "amazon_linux", "openwrt" ]
+    },
+    "UpdateThingRuntimeConfigurationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "TelemetryConfiguration" : {
+          "shape" : "TelemetryConfigurationUpdate",
+          "documentation" : "Configuration for telemetry service."
+        },
+        "ThingName" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "ThingName",
+          "documentation" : "The thing name."
+        }
+      },
+      "required" : [ "ThingName" ]
+    },
+    "UpdateThingRuntimeConfigurationResponse" : {
+      "type" : "structure",
+      "members" : { }
     },
     "VersionInformation" : {
       "type" : "structure",
@@ -5883,11 +6058,11 @@
         },
         "Id" : {
           "shape" : "__string",
-          "documentation" : "The ID of the version."
+          "documentation" : "The ID of the parent definition that the version is associated with."
         },
         "Version" : {
           "shape" : "__string",
-          "documentation" : "The unique ID of the version."
+          "documentation" : "The ID of the version."
         }
       },
       "documentation" : "Information about a version."

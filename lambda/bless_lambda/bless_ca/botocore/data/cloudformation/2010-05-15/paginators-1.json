@@ -23,7 +23,11 @@
         "NotificationARNs",
         "RollbackConfiguration",
         "Capabilities",
-        "Tags"
+        "Tags",
+        "ParentChangeSetId",
+        "IncludeNestedStacks",
+        "RootChangeSetId",
+        "OnStackFailure"
       ]
     },
     "DescribeStackEvents": {
@@ -84,6 +88,12 @@
       "input_token": "NextToken",
       "output_token": "NextToken",
       "result_key": "Imports"
+    },
+    "ListTypes": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "TypeSummaries"
     }
   }
 }

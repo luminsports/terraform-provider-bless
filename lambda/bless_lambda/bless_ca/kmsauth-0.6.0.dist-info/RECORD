@@ -1,0 +1,15 @@
+kmsauth-0.6.0.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+kmsauth-0.6.0.dist-info/LICENSE,sha256=tAkwu8-AdEyGxGoSvJ2gVmQdcicWw3j1ZZueVV74M-E,11357
+kmsauth-0.6.0.dist-info/METADATA,sha256=h_zclXngRw7iNr7Hk9vVB9U0xLKMNJXYZvxUYjIQof4,321
+kmsauth-0.6.0.dist-info/RECORD,,
+kmsauth-0.6.0.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+kmsauth-0.6.0.dist-info/WHEEL,sha256=g4nMs7d-Xl9-xC9XovUrsDHGXt-FT0E17Yqo92DEfvY,92
+kmsauth-0.6.0.dist-info/top_level.txt,sha256=88M50pcwBGET1mvu5Kv8RaxR64z18lmJ-I9NtrJPU8g,8
+kmsauth/__init__.py,sha256=xxefKobygeNN3zue4114UY1XNk9UfEu7rHshiNYz_fc,20829
+kmsauth/__pycache__/__init__.cpython-310.pyc,,
+kmsauth/__pycache__/services.cpython-310.pyc,,
+kmsauth/services.py,sha256=rP8D8rbVWQ7z29p-RW4R52eSrtkDLn3q_XmLfJPNHgU,2278
+kmsauth/utils/__init__.py,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+kmsauth/utils/__pycache__/__init__.cpython-310.pyc,,
+kmsauth/utils/__pycache__/lru.cpython-310.pyc,,
+kmsauth/utils/lru.py,sha256=ciubwljHoBSDIj3Y3cE1OsOW44f9J9SXsT5G5Z5RUmk,651
